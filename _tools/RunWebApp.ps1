@@ -1,3 +1,5 @@
 $projectPath = Join-Path $PSScriptRoot "../FutterlisteNg.Web"
 
-dotnet run --urls=http://127.0.0.1:0 --project $projectPath
+Push-Location $projectPath
+dotnet watch run --urls=http://127.0.0.1:80
+Pop-Location

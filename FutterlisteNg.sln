@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutterlisteNg.UnitTests", "
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FutterlisteNg.Domain", "FutterlisteNg.Domain\FutterlisteNg.Domain.fsproj", "{A07B46A6-42BB-4495-A6DC-74AE83725D69}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_tools", "_tools", "{DFB48567-85B7-46DD-9E89-083CEC5D99E4}"
+ProjectSection(SolutionItems) = preProject
+	_tools\RunWebApi.ps1 = _tools\RunWebApi.ps1
+	_tools\RunWebApp.ps1 = _tools\RunWebApp.ps1
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,15 +1,17 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="sidebar">
-    <NavMenu />
-</div>
-
 <div class="main">
-    <div class="top-row px-4">
-        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-    </div>
-
-    <div class="content px-4">
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo center">FutterlisteNg</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li>
+                    <a href="users">Users</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="app">
         @Body
     </div>
 </div>

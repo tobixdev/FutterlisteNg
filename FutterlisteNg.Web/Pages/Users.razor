@@ -1,0 +1,39 @@
+﻿@page "/user-list"
+@using FutterlisteNg.Web.Configuration
+@inject HttpClient Http
+@inject IConfiguration Configuration
+
+<h1>Users</h1>
+
+@if (_users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in _users)
+            {
+                <tr>
+                    <td>@user</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    string[] _users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("Test");
+        _users = await Http.GetJsonAsync<string[]>(Configuration.ApiBaseUrl + "user");
+    }
+}
