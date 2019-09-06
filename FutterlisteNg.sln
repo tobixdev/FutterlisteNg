@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutterlisteNg.Web", "Futter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutterlisteNg.Api", "FutterlisteNg.Api\FutterlisteNg.Api.csproj", "{683AF1D8-F8DE-4451-9AAC-65C98FE67C70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutterlisteNg.Data", "FutterlisteNg.Data\FutterlisteNg.Data.csproj", "{D58E97D2-18FE-4FF6-9043-239DF189740E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutterlisteNg.Domain", "FutterlisteNg.Domain\FutterlisteNg.Domain.csproj", "{57E588B3-7B74-4C4B-8FB6-306283F47257}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutterlisteNg.UnitTests", "FutterlisteNg.UnitTests\FutterlisteNg.UnitTests.csproj", "{42E4DC9A-34F1-46D0-BBE7-410A442889CA}"
@@ -50,18 +48,6 @@ Global
 		{683AF1D8-F8DE-4451-9AAC-65C98FE67C70}.Release|x64.Build.0 = Release|Any CPU
 		{683AF1D8-F8DE-4451-9AAC-65C98FE67C70}.Release|x86.ActiveCfg = Release|Any CPU
 		{683AF1D8-F8DE-4451-9AAC-65C98FE67C70}.Release|x86.Build.0 = Release|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Debug|x64.Build.0 = Debug|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Debug|x86.Build.0 = Debug|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Release|x64.ActiveCfg = Release|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Release|x64.Build.0 = Release|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Release|x86.ActiveCfg = Release|Any CPU
-		{D58E97D2-18FE-4FF6-9043-239DF189740E}.Release|x86.Build.0 = Release|Any CPU
 		{57E588B3-7B74-4C4B-8FB6-306283F47257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57E588B3-7B74-4C4B-8FB6-306283F47257}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57E588B3-7B74-4C4B-8FB6-306283F47257}.Debug|x64.ActiveCfg = Debug|Any CPU
