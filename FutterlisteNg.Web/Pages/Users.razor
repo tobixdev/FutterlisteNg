@@ -1,7 +1,7 @@
 ﻿@page "/user-list"
-@using FutterlisteNg.Web.Configuration
-@inject HttpClient Http
-@inject IConfiguration Configuration
+@using FutterlisteNg.Domain.Model
+@using FutterlisteNg.Web.Services
+@inject IUserClientService UserClientService 
 
 <h1>Users</h1>
 
@@ -21,7 +21,7 @@ else
             @foreach (var user in _users)
             {
                 <tr>
-                    <td>@user</td>
+                    <td>@user.Name (@user.ShortName)</td>
                 </tr>
             }
         </tbody>
@@ -29,11 +29,10 @@ else
 }
 
 @code {
-    string[] _users;
+    User[] _users;
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("Test");
-        _users = await Http.GetJsonAsync<string[]>(Configuration.ApiBaseUrl + "user");
+        _users = await UserClientService.All();
     }
 }

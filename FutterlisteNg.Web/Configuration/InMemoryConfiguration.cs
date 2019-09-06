@@ -1,12 +1,21 @@
+using System.Linq;
+
 namespace FutterlisteNg.Web.Configuration
 {
     public class InMemoryConfiguration : IConfiguration
     {
         public InMemoryConfiguration(string apiBaseUrl)
         {
-            ApiBaseUrl = apiBaseUrl;
+            ApiBaseUrl = NormalizeBaseUrl(apiBaseUrl);
         }
 
-        public string ApiBaseUrl { get; }
+        private string NormalizeBaseUrl(string apiBaseUrl)
+        {
+            if (apiBaseUrl.Last() == '/')
+                return apiBaseUrl;
+            return apiBaseUrl + "/";
+        }
+
+        public string ApiBaseUrl { get; set; }
     }
 }
