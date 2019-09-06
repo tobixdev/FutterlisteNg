@@ -1,7 +1,8 @@
 ﻿@import url('materialize/materialize.min.css');
 
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+.app  {
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
 .invalid {

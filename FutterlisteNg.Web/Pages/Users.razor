@@ -3,7 +3,7 @@
 @using FutterlisteNg.Web.Services
 @inject IUserClientService UserClientService 
 
-<h1>Users</h1>
+<h2>Users</h2>
 
 @if (_users == null)
 {
@@ -14,7 +14,7 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>User</th>
+                <th>Name</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +23,10 @@ else
                 <tr>
                     <td>@user.Name (@user.ShortName)</td>
                 </tr>
+            }
+            @if (_users.Length == 0)
+            {
+                <p>No users found.</p>
             }
         </tbody>
     </table>
