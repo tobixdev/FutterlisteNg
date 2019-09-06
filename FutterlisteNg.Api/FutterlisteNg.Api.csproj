@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FutterlisteNg.Domain\FutterlisteNg.Domain.fsproj" />
   </ItemGroup>
 
 </Project>

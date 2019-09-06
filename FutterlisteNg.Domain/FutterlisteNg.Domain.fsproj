@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Include="IUserRepository.fs" />
+      <Compile Include="Model\User.fs" />
+      <Compile Include="Data\IUserRepository.fs" />
+      <Compile Include="Services\IUserService.fs" />
     </ItemGroup>
 
 </Project>
