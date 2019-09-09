@@ -2,12 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <RootNamespace>FutterlisteNg.Domain</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <Compile Include="Model\User.fs" />
       <Compile Include="Data\IUserRepository.fs" />
       <Compile Include="Services\IUserService.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MongoDB.Driver" Version="2.9.1" />
+      <PackageReference Include="MongoDB.FSharp" Version="0.1.0" />
     </ItemGroup>
 
 </Project>

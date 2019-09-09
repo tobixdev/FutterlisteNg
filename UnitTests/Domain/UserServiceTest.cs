@@ -24,9 +24,9 @@ namespace FutterlisteNg.UnitTests.Domain
         [Test]
         public void All_WithEmpty_ReturnsEmpty()
         {
-            A.CallTo(() => _userRepository.All).Returns(new List<User>());
+            A.CallTo(() => _userRepository.All()).Returns(new List<User>());
             
-            var result = _sut.All;
+            var result = _sut.All();
             
             Assert.That(result, Is.Empty);
         }
@@ -35,9 +35,9 @@ namespace FutterlisteNg.UnitTests.Domain
         public void All_WithNonEmpty_ReturnsNonEmpty()
         {
             var users = new List<User> {new User("Some User", "su")};
-            A.CallTo(() => _userRepository.All).Returns(users);
+            A.CallTo(() => _userRepository.All()).Returns(users);
             
-            var result = _sut.All.ToList();
+            var result = _sut.All().ToList();
             
             Assert.That(result, Has.Count.EqualTo(1));
             Assert.That(result[0].Name, Is.EqualTo("Some User"));

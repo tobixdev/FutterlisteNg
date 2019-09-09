@@ -1,0 +1,22 @@
+@page "/users/create"
+@using FutterlisteNg.Web.Client
+@inject IUserClient UserClient
+
+<h2>Create User</h2>
+
+<form>
+    <div class="row">
+        <div class="input-field col s6">
+            <input id="name" type="text" class="validate">
+            <label class="active" for="name">Name</label>
+        </div>
+        <div class="input-field col s3">
+            <input id="shortName" type="text" class="validate">
+            <label class="active" for="shortName">Short Name</label>
+        </div>
+    </div>
+</form>
+
+
+@code {
+}

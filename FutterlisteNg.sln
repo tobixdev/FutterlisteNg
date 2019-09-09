@@ -3,19 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutterlisteNg.Web", "FutterlisteNg.Web\FutterlisteNg.Web.csproj", "{782FC3DE-9FA2-4495-85CC-2301920333FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{782FC3DE-9FA2-4495-85CC-2301920333FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutterlisteNg.Api", "FutterlisteNg.Api\FutterlisteNg.Api.csproj", "{683AF1D8-F8DE-4451-9AAC-65C98FE67C70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{683AF1D8-F8DE-4451-9AAC-65C98FE67C70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutterlisteNg.UnitTests", "FutterlisteNg.UnitTests\FutterlisteNg.UnitTests.csproj", "{42E4DC9A-34F1-46D0-BBE7-410A442889CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{42E4DC9A-34F1-46D0-BBE7-410A442889CA}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FutterlisteNg.Domain", "FutterlisteNg.Domain\FutterlisteNg.Domain.fsproj", "{A07B46A6-42BB-4495-A6DC-74AE83725D69}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Domain", "Domain\Domain.fsproj", "{A07B46A6-42BB-4495-A6DC-74AE83725D69}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_tools", "_tools", "{DFB48567-85B7-46DD-9E89-083CEC5D99E4}"
-ProjectSection(SolutionItems) = preProject
-	_tools\RunWebApi.ps1 = _tools\RunWebApi.ps1
-	_tools\RunWebApp.ps1 = _tools\RunWebApp.ps1
-EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{16EECCA2-D610-4744-BBBF-673FA6435B51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,5 +74,17 @@ Global
 		{A07B46A6-42BB-4495-A6DC-74AE83725D69}.Release|x64.Build.0 = Release|Any CPU
 		{A07B46A6-42BB-4495-A6DC-74AE83725D69}.Release|x86.ActiveCfg = Release|Any CPU
 		{A07B46A6-42BB-4495-A6DC-74AE83725D69}.Release|x86.Build.0 = Release|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Debug|x64.Build.0 = Debug|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Debug|x86.Build.0 = Debug|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Release|x64.ActiveCfg = Release|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Release|x64.Build.0 = Release|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Release|x86.ActiveCfg = Release|Any CPU
+		{16EECCA2-D610-4744-BBBF-673FA6435B51}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

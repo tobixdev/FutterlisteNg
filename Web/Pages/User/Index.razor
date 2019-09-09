@@ -1,7 +1,7 @@
-﻿@page "/user-list"
-@using FutterlisteNg.Domain.Model
-@using FutterlisteNg.Web.Services
-@inject IUserClientService UserClientService 
+﻿@page "/users"
+@using FutterlisteNg.Shared
+@using FutterlisteNg.Web.Client
+@inject IUserClient UserClient 
 
 <h2>Users</h2>
 
@@ -33,10 +33,10 @@ else
 }
 
 @code {
-    User[] _users;
+    UserViewModel[] _users;
 
     protected override async Task OnInitializedAsync()
     {
-        _users = await UserClientService.All();
+        _users = await UserClient.All();
     }
 }

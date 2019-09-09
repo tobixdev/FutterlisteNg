@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using FutterlisteNg.Domain.Model;
+using System.Linq;
 using FutterlisteNg.Domain.Services;
+using FutterlisteNg.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FutterlisteNg.Api.Controllers
@@ -17,9 +18,9 @@ namespace FutterlisteNg.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IEnumerable<UserViewModel> Get()
         {
-            return _userService.All;
+            return _userService.All().Select(u => new UserViewModel(u.Name, u.ShortName));
         }
     }
 }
