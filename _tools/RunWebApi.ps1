@@ -1,4 +1,4 @@
-$projectPath = Join-Path $PSScriptRoot "../FutterlisteNg.Api"
+$projectPath = Join-Path $PSScriptRoot "../Api"
 
 Push-Location $projectPath
 dotnet watch run
