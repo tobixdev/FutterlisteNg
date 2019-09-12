@@ -21,7 +21,7 @@ namespace FutterlisteNg.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddServerSideBlazor(); 
+            services.AddServerSideBlazor();
             services.AddScoped(typeof(IUserService), typeof(UserService));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddSingleton(typeof(IToastService), typeof(ToastService));

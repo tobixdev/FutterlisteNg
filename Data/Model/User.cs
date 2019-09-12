@@ -1,5 +1,8 @@
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace FutterlisteNg.Data.Model
 {
+    [BsonIgnoreExtraElements]
     public class User
     {
         public User()
@@ -14,5 +17,10 @@ namespace FutterlisteNg.Data.Model
 
         public string Name { get; set; }
         public string ShortName { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Name)}: {Name}, {nameof(ShortName)}: {ShortName}";
+        }
     }
 }
