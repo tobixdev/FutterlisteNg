@@ -8,7 +8,7 @@ type IUserRepository =
     abstract Add: User -> unit
 
 type UserRepository() =
-    let ConnectionString = ""
+    let ConnectionString = "mongodb://localhost:27017"
     let DatabaseName = "Futterliste"
     let CollectionName = "User"
     let client = MongoClient(ConnectionString)

@@ -29,5 +29,10 @@ namespace FutterlisteNg.Web.Client
             s_log.Info($"Found {result.Length} users.");
             return result;
         }
+
+        public async Task Create(UserViewModel user)
+        {
+            await _httpClient.PostJsonAsync(UserBaseUrl, user);
+        }
     }
 }

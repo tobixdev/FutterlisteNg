@@ -1,4 +1,5 @@
 @page "/users/create"
+@using FutterlisteNg.Shared
 @using FutterlisteNg.Web.Client
 @inject IUserClient UserClient
 
@@ -7,16 +8,30 @@
 <form>
     <div class="row">
         <div class="input-field col s6">
-            <input id="name" type="text" class="validate">
+            <input id="name" type="text" class="validate" bind="@_user.Name">
             <label class="active" for="name">Name</label>
         </div>
+    </div>
+
+    <div class="row">
         <div class="input-field col s3">
-            <input id="shortName" type="text" class="validate">
+            <input id="shortName" type="text" class="validate" bind="@_user.Name">
             <label class="active" for="shortName">Short Name</label>
         </div>
     </div>
+
+    <button class="btn waves-effect waves-light" type="submit" name="action" onclick="@CreateUser()">
+        Submit
+        <i class="material-icons right">send</i>
+    </button>
 </form>
 
 
 @code {
+    private readonly UserViewModel _user = new UserViewModel();
+
+    private async Task CreateUser()
+    {
+        await UserClient.Create (_user);
+    }
 }

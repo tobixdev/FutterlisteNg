@@ -13,6 +13,17 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Domain", "Domain\Domain.fsp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{16EECCA2-D610-4744-BBBF-673FA6435B51}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_tools", "_tools", "{DDB88D9E-66C9-4C14-8DD7-1FC1C2C31EBD}"
+ProjectSection(SolutionItems) = preProject
+	_tools\RunWebApi.ps1 = _tools\RunWebApi.ps1
+	_tools\RunWebApp.ps1 = _tools\RunWebApp.ps1
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_docker", "_docker", "{05E36189-933C-4F19-9725-6815D251EAAE}"
+ProjectSection(SolutionItems) = preProject
+	_docker\docker-compose.yml = _docker\docker-compose.yml
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
