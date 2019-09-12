@@ -1,4 +1,4 @@
-using FutterlisteNg.Domain.Data;
+using FutterlisteNg.Data.Repository;
 using FutterlisteNg.Domain.Service;
 using FutterlisteNg.Web.Service;
 using Microsoft.AspNetCore.Builder;

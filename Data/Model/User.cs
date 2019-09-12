@@ -1,4 +1,4 @@
-namespace FutterlisteNg.Domain.Model
+namespace FutterlisteNg.Data.Model
 {
     public class User
     {

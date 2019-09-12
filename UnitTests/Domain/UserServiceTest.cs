@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using FakeItEasy;
-using FutterlisteNg.Domain.Data;
-using FutterlisteNg.Domain.Model;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading.Tasks;
+using FutterlisteNg.Data.Model;
+using FutterlisteNg.Data.Repository;
 using FutterlisteNg.Domain.Service;
 
 namespace FutterlisteNg.UnitTests.Domain

@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FutterlisteNg.Domain.Model;
+using FutterlisteNg.Data.Model;
 
-namespace FutterlisteNg.Domain.Data
+namespace FutterlisteNg.Data.Repository
 {
     public interface IUserRepository
     {

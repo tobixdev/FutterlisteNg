@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FutterlisteNg.Domain.Data;
-using FutterlisteNg.Domain.Model;
+using FutterlisteNg.Data.Model;
+using FutterlisteNg.Data.Repository;
 
 namespace FutterlisteNg.Domain.Service
 {
