@@ -36,6 +36,4 @@ msbuild.wrn
 # Visual Studio 2015
 .vs/
 
-# Vscode F# extension
-.ionide
 /_docker/data/*

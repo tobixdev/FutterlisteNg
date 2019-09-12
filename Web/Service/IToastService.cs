@@ -4,6 +4,6 @@ namespace FutterlisteNg.Web.Service
 {
     public interface IToastService
     {
-        void Error(string message);
+        Task Error(string message);
     }
 }

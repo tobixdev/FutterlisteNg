@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using FakeItEasy;
 using FutterlisteNg.Domain.Data;
 using FutterlisteNg.Domain.Model;
-using FutterlisteNg.Domain.Services;
 using NUnit.Framework;
 using System.Linq;
+using System.Threading.Tasks;
+using FutterlisteNg.Domain.Service;
 
 namespace FutterlisteNg.UnitTests.Domain
 {
@@ -22,22 +23,22 @@ namespace FutterlisteNg.UnitTests.Domain
         }
 
         [Test]
-        public void All_WithEmpty_ReturnsEmpty()
+        public async Task All_WithEmpty_ReturnsEmpty()
         {
-            A.CallTo(() => _userRepository.All()).Returns(new List<User>());
+            A.CallTo(() => _userRepository.FindAllAsync()).Returns(new List<User>());
             
-            var result = _sut.All();
+            var result = await _sut.FindAllAsync();
             
             Assert.That(result, Is.Empty);
         }
 
         [Test]
-        public void All_WithNonEmpty_ReturnsNonEmpty()
+        public async Task All_WithNonEmpty_ReturnsNonEmpty()
         {
             var users = new List<User> {new User("Some User", "su")};
-            A.CallTo(() => _userRepository.All()).Returns(users);
+            A.CallTo(() => _userRepository.FindAllAsync()).Returns(users);
             
-            var result = _sut.All().ToList();
+            var result = (await _sut.FindAllAsync()).ToList();
             
             Assert.That(result, Has.Count.EqualTo(1));
             Assert.That(result[0].Name, Is.EqualTo("Some User"));

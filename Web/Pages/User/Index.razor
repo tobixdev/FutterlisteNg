@@ -1,9 +1,9 @@
 ﻿@page "/users"
-@using FutterlisteNg.Shared
-@using FutterlisteNg.Web.Client
+@using FutterlisteNg.Domain.Model
+@using FutterlisteNg.Domain.Service
 @using FutterlisteNg.Web.Service
-@inject IUserClient UserClient 
 @inject IToastService ToastService
+@inject IUserService UserService
 
 <h2>Users</h2>
 
@@ -38,11 +38,11 @@ else
     <a class="btn-floating btn-large red" href="/users/create"><i class="material-icons">add</i></a>
 </div>
 @code {
-    UserViewModel[] _users;
+    User[] _users;
 
     protected override async Task OnInitializedAsync()
     {
-        ToastService.Error("test");
-        _users = await UserClient.All();
+        await ToastService.Error("test");
+        _users = (await UserService.FindAllAsync()).ToArray();
     }
 }

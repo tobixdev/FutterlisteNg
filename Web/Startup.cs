@@ -1,24 +1,53 @@
-using FutterlisteNg.Web.Client;
-using FutterlisteNg.Web.Configuration;
+using FutterlisteNg.Domain.Data;
+using FutterlisteNg.Domain.Service;
 using FutterlisteNg.Web.Service;
-using Microsoft.AspNetCore.Components.Builder;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace FutterlisteNg.Web
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            var configuration = new InMemoryConfiguration("http://localhost:5000");
-            services.AddSingleton(typeof(IConfiguration), configuration);
-            services.AddSingleton(typeof(IUserClient), typeof(UserClient));
+            services.AddRazorPages();
+            services.AddServerSideBlazor(); 
+            services.AddScoped(typeof(IUserService), typeof(UserService));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddSingleton(typeof(IToastService), typeof(ToastService));
         }
 
-        public void Configure(IComponentsApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.AddComponent<App>("app");
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
+            });
         }
     }
 }

@@ -2,14 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>FutterlisteNg.Domain</AssemblyName>
         <RootNamespace>FutterlisteNg.Domain</RootNamespace>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Compile Include="Model\User.fs" />
-      <Compile Include="Data\UserRepository.fs" />
-      <Compile Include="Services\IUserService.fs" />
-    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="MongoDB.Driver" Version="2.9.1" />

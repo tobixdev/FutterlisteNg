@@ -1,7 +1,7 @@
 @page "/users/create"
-@using FutterlisteNg.Shared
-@using FutterlisteNg.Web.Client
-@inject IUserClient UserClient
+@using FutterlisteNg.Domain.Model
+@using FutterlisteNg.Domain.Service
+@inject IUserService UserService
 
 <h2>Create User</h2>
 
@@ -28,10 +28,10 @@
 
 
 @code {
-    private readonly UserViewModel _user = new UserViewModel();
+    private readonly User _user = new User();
 
     private async Task CreateUser()
     {
-        await UserClient.Create (_user);
+        await UserService.Add (_user);
     }
 }

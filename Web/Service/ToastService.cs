@@ -1,20 +1,21 @@
+using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
 namespace FutterlisteNg.Web.Service
 {
     public class ToastService : IToastService
     {
-        private readonly IJSInProcessRuntime _jsRuntime;
+        private readonly IJSRuntime _jsRuntime;
 
         public ToastService(IJSRuntime jsRuntime)
         {
-            _jsRuntime = (IJSInProcessRuntime) jsRuntime;
+            _jsRuntime = jsRuntime;
         }
 
-        public void Error(string message)
+        public async Task Error(string message)
         {
             var payload = new ErrorToast(message);
-            _jsRuntime.InvokeVoid("M.toast", payload);
+            // await _jsRuntime.InvokeVoidAsync("M.toast", payload);
         }
 
         private class ErrorToast
