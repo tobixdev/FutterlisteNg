@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MongoDB.Driver;
 
 namespace FutterlisteNg.Web
 {
@@ -22,6 +23,8 @@ namespace FutterlisteNg.Web
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSingleton(typeof(IMongoDatabase),
+                new MongoClient("mongodb://localhost:27017").GetDatabase("FutterlisteNg"));
             services.AddScoped(typeof(IUserService), typeof(UserService));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddSingleton(typeof(IToastService), typeof(ToastService));
