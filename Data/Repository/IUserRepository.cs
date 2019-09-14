@@ -7,6 +7,6 @@ namespace FutterlisteNg.Data.Repository
     public interface IUserRepository
     {
         Task<IEnumerable<User>> FindAllAsync();
-        Task Add(User toAdd);
+        Task AddAsync(User toAdd);
     }
 }

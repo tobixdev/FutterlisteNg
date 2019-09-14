@@ -42,7 +42,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await ToastService.Error("test");
         _users = (await UserService.FindAllAsync()).ToArray();
     }
 }

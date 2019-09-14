@@ -15,7 +15,7 @@ namespace FutterlisteNg.Web.Service
         public async Task Error(string message)
         {
             var payload = new ErrorToast(message);
-            // await _jsRuntime.InvokeVoidAsync("M.toast", payload);
+            await _jsRuntime.InvokeVoidAsync("M.toast", payload);
         }
 
         private class ErrorToast

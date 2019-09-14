@@ -29,7 +29,7 @@ namespace FutterlisteNg.Domain.Service
                 throw new ValidationException("User must have a Name and ShortName");
             
             s_log.Info("Creating new User: " + toAdd);
-            await _userRepository.Add(toAdd);
+            await _userRepository.AddAsync(toAdd);
         }
     }
 }

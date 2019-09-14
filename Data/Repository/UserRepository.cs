@@ -14,13 +14,15 @@ namespace FutterlisteNg.Data.Repository
             _mongoDatabase = mongoDatabase;
         }
 
+        private IMongoCollection<User> UserCollection => _mongoDatabase.GetCollection<User>("User");
+
         public async Task<IEnumerable<User>> FindAllAsync()
         {
-            var cursor = await _mongoDatabase.GetCollection<User>("User").FindAsync(FilterDefinition<User>.Empty);
+            var cursor = await UserCollection.FindAsync(FilterDefinition<User>.Empty);
             return cursor.ToEnumerable();
         }
 
-        public async Task Add(User toAdd)
+        public async Task AddAsync(User toAdd)
         {
             await _mongoDatabase.GetCollection<User>("User").InsertOneAsync(toAdd);
         }
