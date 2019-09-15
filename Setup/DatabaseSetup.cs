@@ -21,7 +21,8 @@ namespace FutterlisteNg.Setup
             var stan = new User("Stan Marsh", "Stan");
             var kenny = new User("Kenny McCormick", "Kenny");
             var kyle = new User("Kyle Broflovski", "Kyle");
-            database.GetCollection<User>(CollectionNames.Users).InsertMany(new[] {eric, stan, kenny, kyle});
+            var token = new User("Token Black", "Token");
+            database.GetCollection<User>(CollectionNames.Users).InsertMany(new[] {eric, stan, kenny, kyle, token});
 
             var payment1 = new PaymentBuilder().WithPayedBy("Eric")
                 .WithDescription("Kentucky Fried Chicken")

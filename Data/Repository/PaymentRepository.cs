@@ -22,11 +22,17 @@ namespace FutterlisteNg.Data.Repository
             await PaymentCollection.InsertOneAsync(payment);
         }
 
+        public async Task<IEnumerable<Payment>> FindAllAsync()
+        {
+            var cursor = await PaymentCollection.FindAsync(FilterDefinition<Payment>.Empty);
+            return await cursor.ToListAsync();
+        }
+
         public async Task<IEnumerable<Payment>> FindPaymentsPayedBy(string shortName)
         {
             var filter = new FilterDefinitionBuilder<Payment>().Eq(p => p.PayedBy, shortName);
             var cursor = await PaymentCollection.FindAsync(filter);
-            return cursor.ToEnumerable();
+            return await cursor.ToListAsync();
         }
 
         public async Task<IEnumerable<Payment>> FindPaymentsPayedFor(string shortName)
@@ -34,7 +40,7 @@ namespace FutterlisteNg.Data.Repository
             var filter = new FilterDefinitionBuilder<Payment>()
                 .ElemMatch(p => p.PaymentLines, pl => pl.PaidFor == shortName);
             var cursor = await PaymentCollection.FindAsync(filter);
-            return cursor.ToEnumerable();
+            return await cursor.ToListAsync();
         }
     }
 }

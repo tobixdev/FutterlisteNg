@@ -39,7 +39,7 @@ namespace FutterlisteNg.Tests.Data
 
             var result = (await _sut.FindAllAsync()).ToArray();
 
-            result.Should().HaveCount(5);
+            result.Should().HaveCount(6);
             result.Should().ContainEquivalentOf(user);
         }
     }

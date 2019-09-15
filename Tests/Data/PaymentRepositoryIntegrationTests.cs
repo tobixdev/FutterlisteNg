@@ -22,14 +22,14 @@ namespace FutterlisteNg.Tests.Data
         public async Task AddPayment_ShouldAddPayment()
         {
             var payment = new PaymentBuilder()
-                .WithPayedBy("Eric")
-                .WithDescription("KFC")
-                .WithPaymentLine("Eric", 10.5m)
+                .WithPayedBy("TestUser")
+                .WithDescription("TestExpense")
+                .WithPaymentLine("TestUser", 10.5m)
                 .Build();
 
             await _paymentRepository.AddPaymentAsync(payment);
 
-            var fetchedPayment = (await _paymentRepository.FindPaymentsPayedBy("Eric")).Single();
+            var fetchedPayment = (await _paymentRepository.FindPaymentsPayedBy("TestUser")).Single();
             fetchedPayment.Should().BeEquivalentTo(payment);
         }
 
@@ -37,7 +37,7 @@ namespace FutterlisteNg.Tests.Data
         public async Task FindPaymentsPayedBy_ShouldFilterPaymentsCorrectly()
         {
             var payment1 = new PaymentBuilder()
-                .WithPayedBy("Eric")
+                .WithPayedBy("Kyle")
                 .WithDescription("KFC")
                 .WithPaymentLine("Eric", 10.5m)
                 .WithPaymentLine("Kyle", 9.75m)
@@ -50,7 +50,7 @@ namespace FutterlisteNg.Tests.Data
                 .Build();
             await AddPayments(payment1, payment2);
 
-            var result = (await _paymentRepository.FindPaymentsPayedBy("Eric")).ToArray();
+            var result = (await _paymentRepository.FindPaymentsPayedBy("Kyle")).ToArray();
             
             result.Should().HaveCount(1);
             result[0].Should().BeEquivalentTo(payment1);
@@ -68,15 +68,23 @@ namespace FutterlisteNg.Tests.Data
             var payment2 = new PaymentBuilder()
                 .WithPayedBy("Stan")
                 .WithDescription("Video Games")
-                .WithPaymentLine("Eric", 40m)
+                .WithPaymentLine("Token", 40m)
                 .WithPaymentLine("Stan", 40m)
                 .Build();
             await AddPayments(payment1, payment2);
 
-            var insertedPayment = (await _paymentRepository.FindPaymentsPayedFor("Stan")).ToArray();
+            var insertedPayment = (await _paymentRepository.FindPaymentsPayedFor("Token")).ToArray();
             
             insertedPayment.Should().HaveCount(1);
             insertedPayment[0].Should().BeEquivalentTo(payment2);
+        }
+
+        [Test]
+        public async Task FindAll_ShouldReturnAllPayments()
+        {
+            var payments = await _paymentRepository.FindAllAsync();
+            
+            payments.Should().HaveCount(2);
         }
 
         private async Task AddPayments(params Payment[] payments)

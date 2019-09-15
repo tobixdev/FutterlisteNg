@@ -1,41 +1,60 @@
 @page "/payments"
 @using FutterlisteNg.Data.Model
+@using FutterlisteNg.Domain.Service
 @using FutterlisteNg.Web.Service
 @inject IToastService ToastService
+@inject IPaymentService PaymentService
 
 <h2>Payments</h2>
 
 @if (_payments == null)
 {
-    <p><em>Loading...</em></p>
+    <p>
+        <em>Loading...</em>
+    </p>
 }
 else
 {
     <table class="table">
         <thead>
-            <tr>
-                <th>Payed by</th>
-                <th>Description</th>
-                <th>Amount</th>
-            </tr>
+        <tr>
+            <th>Payed by</th>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
         </thead>
         <tbody>
-            @if (_payments.Length == 0)
+        @if (_payments.Length == 0)
+        {
+            <p>No users found.</p>
+        }
+        else
+        {
+            foreach (var payment in _payments)
             {
-                <p>No users found.</p>
+                <tr>
+                    <td>@payment.PayedBy</td>
+                    <th>@payment.Description</th>
+                    <th>@payment.TotalAmount</th>
+                </tr>
             }
+        }
         </tbody>
     </table>
 }
 
 <div class="fixed-action-btn">
-    <a class="btn-floating btn-large red" href="/payments/create"><i class="material-icons">add</i></a>
+    <a class="btn-floating btn-large red" href="/payments/create">
+        <i class="material-icons">add</i>
+    </a>
 </div>
+
 @code {
     Payment[] _payments;
 
     protected override async Task OnInitializedAsync()
     {
-        _payments = new Payment[0];
+        _payments = (await PaymentService.FindAllAsync()).ToArray();
     }
+
 }
