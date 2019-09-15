@@ -37,6 +37,21 @@ namespace FutterlisteNg.Data.Repository
             return foundUsers.Single();
         }
 
+        public async Task UpdateAsync(User user)
+        {
+            var filterDefinition = CreateShortNameFilter(user);
+
+            await GetByShortNameAsync(user.ShortName); // NOTE: Ensure the user exists
+
+            await UserCollection.FindOneAndReplaceAsync(filterDefinition, user);
+        }
+
+        private static FilterDefinition<User> CreateShortNameFilter(User user)
+        {
+            return new FilterDefinitionBuilder<User>()
+                .Eq(u => u.ShortName, user.ShortName);
+        }
+
         private async Task<List<User>> FindUsersWithShortName(string shortName)
         {
             var filter = new FilterDefinitionBuilder<User>()

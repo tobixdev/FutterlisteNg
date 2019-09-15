@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -18,6 +19,7 @@ namespace FutterlisteNg.Data.Model
         }
 
         public string Name { get; set; }
+        [BsonId]
         public string ShortName { get; set; }
         public List<Payment> PayedBy { get; set; }
 

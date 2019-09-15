@@ -62,5 +62,27 @@ namespace FutterlisteNg.UnitTests.Data
             result[1].Name.Should().Be("TestUser");
             result[1].ShortName.Should().Be("TU");
         }
+        
+        [Test]
+        public async Task Update_WithNonExistingUser_ShouldThrowNotFoundException()
+        {
+            var user = new User("Non Existent", "NE");
+
+            Func<Task> act = async () => await _sut.UpdateAsync(user);
+
+            await act.Should().ThrowAsync<NotFoundException>();
+        }
+        
+        [Test]
+        public async Task Update_WithExistingUser_ShouldUpdatesUser()
+        {
+            var user = new User("User", "U");
+            await _sut.AddAsync(user);
+            
+            await _sut.UpdateAsync(new User("Updated User", "U"));
+
+            var updatedUser = await _sut.GetByShortNameAsync("U");
+            updatedUser.Name.Should().Be("Updated User");
+        }
     }
 }
