@@ -14,7 +14,7 @@ namespace FutterlisteNg.Data.Repository
             _mongoDatabase = mongoDatabase;
         }
 
-        private IMongoCollection<User> UserCollection => _mongoDatabase.GetCollection<User>("User");
+        private IMongoCollection<User> UserCollection => _mongoDatabase.GetCollection<User>(CollectionNames.Users);
 
         public async Task<IEnumerable<User>> FindAllAsync()
         {
@@ -24,7 +24,7 @@ namespace FutterlisteNg.Data.Repository
 
         public async Task AddAsync(User toAdd)
         {
-            await _mongoDatabase.GetCollection<User>("User").InsertOneAsync(toAdd);
+            await _mongoDatabase.GetCollection<User>(CollectionNames.Users).InsertOneAsync(toAdd);
         }
     }
 }

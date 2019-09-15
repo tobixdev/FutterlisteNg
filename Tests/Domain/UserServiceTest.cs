@@ -16,7 +16,7 @@ namespace FutterlisteNg.UnitTests.Domain
         private IUserService _sut;
 
         [SetUp]
-        public void SetUp()
+        public void SetUpBase()
         {
             _userRepository = A.Fake<IUserRepository>();
             _sut = new UserService(_userRepository);

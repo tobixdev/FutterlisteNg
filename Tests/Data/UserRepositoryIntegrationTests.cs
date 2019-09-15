@@ -25,9 +25,11 @@ namespace FutterlisteNg.UnitTests.Data
 
             var result = (await _sut.FindAllAsync()).ToArray();
 
-            result.Should().HaveCount(1);
-            result[0].Name.Should().Be("TestUser");
-            result[0].ShortName.Should().Be("TU");
+            result.Should().HaveCount(2);
+            result[0].Name.Should().Be("Donald Duck");
+            result[0].ShortName.Should().Be("DD");
+            result[1].Name.Should().Be("TestUser");
+            result[1].ShortName.Should().Be("TU");
         }
     }
 }
