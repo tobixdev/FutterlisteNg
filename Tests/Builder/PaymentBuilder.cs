@@ -16,7 +16,7 @@ namespace FutterlisteNg.UnitTests.Builder
             return this;
         }
 
-        public PaymentBuilder WithSpentOn(string spentOn)
+        public PaymentBuilder WithDescription(string spentOn)
         {
             _spentOn = spentOn;
             return this;

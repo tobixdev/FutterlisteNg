@@ -25,7 +25,7 @@ namespace FutterlisteNg.UnitTests.Data
         {
             var payment = new PaymentBuilder()
                 .WithPayedBy("Eric")
-                .WithSpentOn("KFC")
+                .WithDescription("KFC")
                 .WithPaymentLine("Eric", 10.5m)
                 .Build();
 
@@ -40,13 +40,13 @@ namespace FutterlisteNg.UnitTests.Data
         {
             var payment1 = new PaymentBuilder()
                 .WithPayedBy("Eric")
-                .WithSpentOn("KFC")
+                .WithDescription("KFC")
                 .WithPaymentLine("Eric", 10.5m)
                 .WithPaymentLine("Kyle", 9.75m)
                 .Build();
             var payment2 = new PaymentBuilder()
                 .WithPayedBy("Stan")
-                .WithSpentOn("Video Games")
+                .WithDescription("Video Games")
                 .WithPaymentLine("Eric", 40m)
                 .WithPaymentLine("Stan", 40m)
                 .Build();
@@ -63,13 +63,13 @@ namespace FutterlisteNg.UnitTests.Data
         {
             var payment1 = new PaymentBuilder()
                 .WithPayedBy("Eric")
-                .WithSpentOn("KFC")
+                .WithDescription("KFC")
                 .WithPaymentLine("Eric", 10.5m)
                 .WithPaymentLine("Kyle", 9.75m)
                 .Build();
             var payment2 = new PaymentBuilder()
                 .WithPayedBy("Stan")
-                .WithSpentOn("Video Games")
+                .WithDescription("Video Games")
                 .WithPaymentLine("Eric", 40m)
                 .WithPaymentLine("Stan", 40m)
                 .Build();

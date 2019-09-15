@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
@@ -13,10 +14,10 @@ namespace FutterlisteNg.Data.Model
         {
         }
         
-        public Payment(string payedBy, string spentOn)
+        public Payment(string payedBy, string description)
         {
             PayedBy = payedBy;
-            SpentOn = spentOn;
+            Description = description;
             PaymentLines = new List<PaymentLine>();
         }
 
@@ -27,9 +28,11 @@ namespace FutterlisteNg.Data.Model
         public string PayedBy { get; set; }
         
         [BsonElement("spent_on")]
-        public string SpentOn { get; set; }
+        public string Description { get; set; }
         
         [BsonElement("payment_lines")]
         public List<PaymentLine> PaymentLines { get; set; }
+
+        [BsonIgnore] public decimal TotalAmount => PaymentLines.Sum(pl => pl.Amount);
     }
 }
