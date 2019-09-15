@@ -6,7 +6,7 @@ namespace FutterlisteNg.Data.Model
     [BsonIgnoreExtraElements]
     public class User
     {
-        public User() : this(null, null)
+        public User() : this(string.Empty, string.Empty)
         {
         }
 

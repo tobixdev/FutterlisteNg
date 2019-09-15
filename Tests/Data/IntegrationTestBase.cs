@@ -14,7 +14,7 @@ namespace FutterlisteNg.UnitTests.Data
         protected IMongoDatabase Database => _mongoClient.GetDatabase(c_databaseName);
 
         [SetUp]
-        public void SetUp()
+        public void SetUpBase()
         {
             Seed();
         }

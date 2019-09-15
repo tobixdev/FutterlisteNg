@@ -1,6 +1,8 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using FutterlisteNg.Data;
 using FutterlisteNg.Data.Model;
 using FutterlisteNg.Data.Repository;
 using NUnit.Framework;
@@ -16,6 +18,24 @@ namespace FutterlisteNg.UnitTests.Data
         public void SetUp()
         {
             _sut = new UserRepository(Database);
+        }
+        
+        [Test]
+        public async Task FindByName_WithExistingUser_ShouldFindCorrectUser()
+        {
+            var result = (await _sut.FindByNameAsync("Donald Duck"));
+
+            result.Should().NotBeNull();
+            result.Name.Should().Be("Donald Duck");
+            result.ShortName.Should().Be("DD");
+        }
+        
+        [Test]
+        public async Task FindByName_WithNonExistingUser_ShouldThrowNotFoundException()
+        {
+            Func<Task<User>> act = async () => await _sut.FindByNameAsync("Non Existent");
+
+            await act.Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
