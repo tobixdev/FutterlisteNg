@@ -8,7 +8,5 @@ namespace FutterlisteNg.Data.Repository
     {
         Task AddAsync(User toAdd);
         Task<IEnumerable<User>> FindAllAsync();
-        Task<User> GetByShortNameAsync(string shortName);
-        Task UpdateAsync(User user);
     }
 }
