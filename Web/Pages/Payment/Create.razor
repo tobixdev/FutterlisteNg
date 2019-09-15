@@ -1,0 +1,41 @@
+@page "/payments/create"
+@using FutterlisteNg.Data.Model
+@using FutterlisteNg.Domain.Service
+@using Microsoft.AspNetCore.Components
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+
+
+<h2>New Payment</h2>
+
+<form>
+    <div class="row">
+        <div class="input-field col s6">
+            <input id="name" type="text" class="validate" @bind="@_user.Name" />
+            <label class="active" for="name">Name</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s3">
+            <input id="shortName" type="text" class="validate" @bind="@_user.ShortName" />
+            <label class="active" for="shortName">Short Name</label>
+        </div>
+    </div>
+
+    <button class="btn waves-effect waves-light" type="submit" name="action" onclick="@CreateUser()">
+        Submit
+        <i class="material-icons right">send</i>
+    </button>
+</form>
+
+
+@code {
+    private readonly User _user = new User();
+
+    private async Task CreateUser()
+    {
+        await UserService.Add (_user);
+        NavigationManager.NavigateTo("/users");
+    }
+}

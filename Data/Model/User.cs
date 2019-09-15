@@ -17,10 +17,14 @@ namespace FutterlisteNg.Data.Model
             ShortName = shortName;
             PayedBy = new List<Payment>();
         }
-
-        public string Name { get; set; }
+        
         [BsonId]
         public string ShortName { get; set; }
+        
+        [BsonElement("name")]
+        public string Name { get; set; }
+        
+        [BsonElement("payed_by")]
         public List<Payment> PayedBy { get; set; }
 
         public override string ToString()

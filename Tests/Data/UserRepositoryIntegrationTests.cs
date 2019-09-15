@@ -34,15 +34,13 @@ namespace FutterlisteNg.UnitTests.Data
         [Test]
         public async Task FindAll_AfterAdd_ShouldFindAddedUser()
         {
-            await _sut.AddAsync(new User("TestUser", "TU"));
+            var user = new User("TestUser", "TU");
+            await _sut.AddAsync(user);
 
             var result = (await _sut.FindAllAsync()).ToArray();
 
-            result.Should().HaveCount(2);
-            result[0].Name.Should().Be("Donald Duck");
-            result[0].ShortName.Should().Be("DD");
-            result[1].Name.Should().Be("TestUser");
-            result[1].ShortName.Should().Be("TU");
+            result.Should().HaveCount(5);
+            result.Should().ContainEquivalentOf(user);
         }
     }
 }

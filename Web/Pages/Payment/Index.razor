@@ -1,0 +1,47 @@
+@page "/payments"
+@using FutterlisteNg.Data.Model
+@using FutterlisteNg.Domain.Service
+@using FutterlisteNg.Web.Service
+@inject IToastService ToastService
+@inject IUserService UserService
+
+<h2>Users</h2>
+
+@if (_users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in _users)
+            {
+                <tr>
+                    <td>@user.Name (@user.ShortName)</td>
+                </tr>
+            }
+            @if (_users.Length == 0)
+            {
+                <p>No users found.</p>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large red" href="/payments/create"><i class="material-icons">add</i></a>
+</div>
+@code {
+    User[] _users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _users = (await UserService.FindAllAsync()).ToArray();
+    }
+}
