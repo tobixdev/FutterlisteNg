@@ -19,23 +19,33 @@ namespace FutterlisteNg.Data.Repository
 
         public async Task AddAsync(User toAdd)
         {
+            var usersWithName = await FindUsersWithShortName(toAdd.ShortName);
+
+            if(usersWithName.Count > 0)
+                throw new DuplicateException($"User with short name '{toAdd.ShortName}' already exists.");
+            
             await _mongoDatabase.GetCollection<User>(CollectionNames.Users).InsertOneAsync(toAdd);
         }
 
-        public async Task<User> FindByNameAsync(string name)
+        public async Task<User> GetByShortNameAsync(string shortName)
         {
-            var filter = new FilterDefinitionBuilder<User>()
-                .Eq(u => u.Name, name);
-            
-            var cursor = await UserCollection.FindAsync(filter);
-            var foundUsers = await cursor.ToListAsync();
-            
+            var foundUsers = await FindUsersWithShortName(shortName);
+
             if(foundUsers.Count == 0)
-                throw new NotFoundException($"User with name '{name}' not found.");
+                throw new NotFoundException($"User with name '{shortName}' not found.");
             
             return foundUsers.Single();
         }
-        
+
+        private async Task<List<User>> FindUsersWithShortName(string shortName)
+        {
+            var filter = new FilterDefinitionBuilder<User>()
+                .Eq(u => u.ShortName, shortName);
+
+            var cursor = await UserCollection.FindAsync(filter);
+            return await cursor.ToListAsync();
+        }
+
         public async Task<IEnumerable<User>> FindAllAsync()
         {
             var cursor = await UserCollection.FindAsync(FilterDefinition<User>.Empty);

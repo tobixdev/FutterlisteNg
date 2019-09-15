@@ -19,11 +19,22 @@ namespace FutterlisteNg.UnitTests.Data
         {
             _sut = new UserRepository(Database);
         }
+
+        [Test]
+        public async Task Add_WithAlreadyExistingUser_ThrowsDuplicateException()
+        {
+            var user = new User("Test User", "TU");
+            await _sut.AddAsync(user);
+
+            Func<Task> act = async () => await _sut.AddAsync(user);
+
+            await act.Should().ThrowAsync<DuplicateException>();
+        }
         
         [Test]
-        public async Task FindByName_WithExistingUser_ShouldFindCorrectUser()
+        public async Task GetByShortName_WithExistingUser_ShouldFindCorrectUser()
         {
-            var result = (await _sut.FindByNameAsync("Donald Duck"));
+            var result = await _sut.GetByShortNameAsync("DD");
 
             result.Should().NotBeNull();
             result.Name.Should().Be("Donald Duck");
@@ -31,9 +42,9 @@ namespace FutterlisteNg.UnitTests.Data
         }
         
         [Test]
-        public async Task FindByName_WithNonExistingUser_ShouldThrowNotFoundException()
+        public async Task GetByShortName_WithNonExistingUser_ShouldThrowNotFoundException()
         {
-            Func<Task<User>> act = async () => await _sut.FindByNameAsync("Non Existent");
+            Func<Task<User>> act = async () => await _sut.GetByShortNameAsync("Non Existent");
 
             await act.Should().ThrowAsync<NotFoundException>();
         }

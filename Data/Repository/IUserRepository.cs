@@ -8,6 +8,6 @@ namespace FutterlisteNg.Data.Repository
     {
         Task AddAsync(User toAdd);
         Task<IEnumerable<User>> FindAllAsync();
-        Task<User> FindByNameAsync(string name);
+        Task<User> GetByShortNameAsync(string shortName);
     }
 }
