@@ -1,5 +1,6 @@
 using FutterlisteNg.Data;
 using FutterlisteNg.Data.Model;
+using FutterlisteNg.Setup;
 using MongoDB.Driver;
 using NUnit.Framework;
 
@@ -16,22 +17,13 @@ namespace FutterlisteNg.UnitTests.Data
         [SetUp]
         public void SetUpBase()
         {
-            Seed();
+            DatabaseSetup.InsertTestData(Database);
         }
 
         [TearDown]
         public void TearDownBase()
         {
             _mongoClient.DropDatabase(c_databaseName);
-        }
-
-        private void Seed()
-        {
-            var eric = new User("Eric Cartman", "Eric");
-            var stan = new User("Stan Marsh", "Stan");
-            var kenny = new User("Kenny McCormick", "Kenny");
-            var kyle = new User("Kyle Broflovski", "Kyle");
-            Database.GetCollection<User>(CollectionNames.Users).InsertMany(new[] {eric, stan, kenny, kyle});
         }
     }
 }
