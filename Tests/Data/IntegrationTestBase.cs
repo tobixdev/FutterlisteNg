@@ -1,10 +1,8 @@
-using FutterlisteNg.Data;
-using FutterlisteNg.Data.Model;
 using FutterlisteNg.Setup;
 using MongoDB.Driver;
 using NUnit.Framework;
 
-namespace FutterlisteNg.UnitTests.Data
+namespace FutterlisteNg.Tests.Data
 {
     public abstract class IntegrationTestBase
     {

@@ -16,13 +16,14 @@ namespace FutterlisteNg.Data.Model
         
         public Payment(string payedBy, string description)
         {
+            Id = Guid.Empty;
             PayedBy = payedBy;
             Description = description;
             PaymentLines = new List<PaymentLine>();
         }
 
-        [BsonId(IdGenerator = typeof(BsonObjectIdGenerator))]
-        public BsonValue Id { get; set; }
+        [BsonId(IdGenerator = typeof(GuidGenerator))]
+        public Guid Id { get; set; }
         
         [BsonElement("payed_by")]
         public string PayedBy { get; set; }

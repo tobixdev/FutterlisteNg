@@ -1,13 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using FutterlisteNg.Data.Model;
 
-namespace FutterlisteNg.UnitTests.Builder
+namespace FutterlisteNg.Data.Model.Builder
 {
     public class PaymentBuilder
     {
-        private string _payedBy;
-        private string _spentOn;
+        private string _payedBy = String.Empty;
+        private string _spentOn = String.Empty;
         private List<PaymentLine> _paymentLines = new List<PaymentLine>();
 
         public PaymentBuilder WithPayedBy(string payedBy)

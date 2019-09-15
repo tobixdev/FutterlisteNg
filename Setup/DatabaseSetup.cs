@@ -1,6 +1,7 @@
 ﻿using System;
 using FutterlisteNg.Data;
 using FutterlisteNg.Data.Model;
+using FutterlisteNg.Data.Model.Builder;
 using MongoDB.Driver;
 
 namespace FutterlisteNg.Setup
@@ -21,6 +22,20 @@ namespace FutterlisteNg.Setup
             var kenny = new User("Kenny McCormick", "Kenny");
             var kyle = new User("Kyle Broflovski", "Kyle");
             database.GetCollection<User>(CollectionNames.Users).InsertMany(new[] {eric, stan, kenny, kyle});
+
+            var payment1 = new PaymentBuilder().WithPayedBy("Eric")
+                .WithDescription("Kentucky Fried Chicken")
+                .WithPaymentLine("Eric", 7.5m)
+                .WithPaymentLine("Stan", 7.5m)
+                .WithPaymentLine("Kenny", 7.5m)
+                .WithPaymentLine("Kyle", 7.5m)
+                .Build();
+            var payment2 = new PaymentBuilder().WithPayedBy("Stan")
+                .WithDescription("Comic books")
+                .WithPaymentLine("Stan", 7.5m)
+                .WithPaymentLine("Kyle", 10m)
+                .Build();
+            database.GetCollection<Payment>(CollectionNames.Payments).InsertMany(new[] { payment1, payment2});
         }
     }
 }

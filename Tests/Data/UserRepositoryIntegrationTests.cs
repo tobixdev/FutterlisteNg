@@ -7,7 +7,7 @@ using FutterlisteNg.Data.Model;
 using FutterlisteNg.Data.Repository;
 using NUnit.Framework;
 
-namespace FutterlisteNg.UnitTests.Data
+namespace FutterlisteNg.Tests.Data
 {
     [TestFixture]
     public class UserRepositoryIntegrationTests : IntegrationTestBase

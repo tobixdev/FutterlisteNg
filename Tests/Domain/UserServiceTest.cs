@@ -1,13 +1,13 @@
 using System.Collections.Generic;
-using FakeItEasy;
-using NUnit.Framework;
 using System.Linq;
 using System.Threading.Tasks;
+using FakeItEasy;
 using FutterlisteNg.Data.Model;
 using FutterlisteNg.Data.Repository;
 using FutterlisteNg.Domain.Service;
+using NUnit.Framework;
 
-namespace FutterlisteNg.UnitTests.Domain
+namespace FutterlisteNg.Tests.Domain
 {
     [TestFixture]
     public class UserServiceTest

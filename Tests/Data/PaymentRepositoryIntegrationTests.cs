@@ -1,14 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using FutterlisteNg.Data;
 using FutterlisteNg.Data.Model;
+using FutterlisteNg.Data.Model.Builder;
 using FutterlisteNg.Data.Repository;
-using FutterlisteNg.UnitTests.Builder;
-using MongoDB.Driver;
 using NUnit.Framework;
 
-namespace FutterlisteNg.UnitTests.Data
+namespace FutterlisteNg.Tests.Data
 {
     public class PaymentRepositoryIntegrationTests : IntegrationTestBase
     {
