@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using FutterlisteNg.Data.Model;
 using MongoDB.Driver;
@@ -41,6 +41,12 @@ namespace FutterlisteNg.Data.Repository
                 .ElemMatch(p => p.PaymentLines, pl => pl.PaidFor == shortName);
             var cursor = await PaymentCollection.FindAsync(filter);
             return await cursor.ToListAsync();
+        }
+
+        public async Task Delete(Guid id)
+        {
+            var filter = new FilterDefinitionBuilder<Payment>().Eq(p => p.Id, id);
+            await PaymentCollection.DeleteOneAsync(filter);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FutterlisteNg.Data.Model;
@@ -22,6 +23,11 @@ namespace FutterlisteNg.Domain.Service
         public async Task AddPaymentAsync(Payment payment)
         {
             await _paymentRepository.AddPaymentAsync(payment);
+        }
+
+        public async Task Delete(Guid id)
+        {
+            await _paymentRepository.Delete(id);
         }
     }
 }

@@ -8,5 +8,6 @@ namespace FutterlisteNg.Domain.Service
     {
         Task<IEnumerable<User>> FindAllAsync();
         Task Add(User toAdd);
+        Task Delete(string username);
     }
 }

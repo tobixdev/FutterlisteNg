@@ -25,11 +25,23 @@ namespace FutterlisteNg.Domain.Service
 
         public async Task Add(User toAdd)
         {
-            if (string.IsNullOrEmpty(toAdd.Name) || string.IsNullOrEmpty(toAdd.ShortName))
-                throw new ValidationException("User must have a Name and ShortName");
+            if (string.IsNullOrEmpty(toAdd.Name) || string.IsNullOrEmpty(toAdd.Username))
+                throw new ValidationException("User must have a Name and Username");
             
             s_log.Info("Creating new User: " + toAdd);
             await _userRepository.AddAsync(toAdd);
+        }
+
+        public async Task Delete(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+                throw new ValidationException("Username must not be null or empty.");
+            
+            if (!(await _userRepository.Exists(username)))
+                throw new ValidationException($"User with username '{username}' does not exist.");
+            
+            s_log.Info("Deleting user " + username);
+            await _userRepository.Delete(username);
         }
     }
 }

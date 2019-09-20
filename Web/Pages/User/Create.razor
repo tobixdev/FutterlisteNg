@@ -1,8 +1,10 @@
 @page "/users/create"
 @using FutterlisteNg.Data.Model
 @using FutterlisteNg.Domain.Service
+@using FutterlisteNg.Web.Service
 @using Microsoft.AspNetCore.Components
 @inject IUserService UserService
+@inject IToastService ToastService
 @inject NavigationManager NavigationManager
 
 
@@ -18,7 +20,7 @@
 
     <div class="row">
         <div class="input-field col s3">
-            <input id="shortName" type="text" class="validate" @bind="@_user.ShortName" />
+            <input id="shortName" type="text" class="validate" @bind="@_user.Username" />
             <label class="active" for="shortName">Short Name</label>
         </div>
     </div>
@@ -36,5 +38,6 @@
     {
         await UserService.Add (_user);
         NavigationManager.NavigateTo("/users");
+        await ToastService.Success("User created");
     }
 }

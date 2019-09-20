@@ -1,0 +1,13 @@
+@namespace FutterlisteNg.Web.Components
+
+@using Microsoft.AspNetCore.Components
+
+<a class="btn-small btn-red" @onclick="OnClick">
+       <i class="material-icons">delete</i>
+</a>
+
+@code
+{
+       [Parameter]
+       public EventCallback OnClick { get; set; }
+}

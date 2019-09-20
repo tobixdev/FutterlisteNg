@@ -2,6 +2,7 @@
 @using FutterlisteNg.Data.Model
 @using FutterlisteNg.Domain.Service
 @using FutterlisteNg.Web.Service
+@using FutterlisteNg.Web.Components
 @inject IToastService ToastService
 @inject IPaymentService PaymentService
 
@@ -21,6 +22,7 @@ else
             <th>Payed by</th>
             <th>Description</th>
             <th>Amount</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +38,7 @@ else
                     <td>@payment.PayedBy</td>
                     <td>@payment.Description</td>
                     <td>@payment.TotalAmount</td>
+                    <td><DeleteButton OnClick="(() => DeletePayment(payment))"/></td>
                 </tr>
             }
         }
@@ -53,6 +56,18 @@ else
     Payment[] _payments;
 
     protected override async Task OnInitializedAsync()
+    {
+        await LoadPayments();
+    }
+
+    private async Task DeletePayment(Payment payment)
+    {
+        PaymentService.Delete(payment.Id);
+        await LoadPayments();
+        await ToastService.Success("Payment deleted");
+    }
+
+    private async Task LoadPayments()
     {
         _payments = (await PaymentService.FindAllAsync()).ToArray();
     }

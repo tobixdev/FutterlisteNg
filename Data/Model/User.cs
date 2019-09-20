@@ -11,15 +11,15 @@ namespace FutterlisteNg.Data.Model
         {
         }
 
-        public User(string name, string shortName)
+        public User(string name, string username)
         {
             Name = name;
-            ShortName = shortName;
+            Username = username;
             PayedBy = new List<Payment>();
         }
         
         [BsonId]
-        public string ShortName { get; set; }
+        public string Username { get; set; }
         
         [BsonElement("name")]
         public string Name { get; set; }
@@ -29,7 +29,7 @@ namespace FutterlisteNg.Data.Model
 
         public override string ToString()
         {
-            return $"{nameof(Name)}: {Name}, {nameof(ShortName)}: {ShortName}";
+            return $"{nameof(Name)}: {Name}, {nameof(Username)}: {Username}";
         }
     }
 }

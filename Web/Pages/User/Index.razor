@@ -2,6 +2,9 @@
 @using FutterlisteNg.Data.Model
 @using FutterlisteNg.Domain.Service
 @using FutterlisteNg.Web.Service
+@using FutterlisteNg.Web.Components
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager NavigationManager
 @inject IToastService ToastService
 @inject IUserService UserService
 
@@ -17,13 +20,15 @@ else
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var user in _users)
             {
                 <tr>
-                    <td>@user.Name (@user.ShortName)</td>
+                    <td>@user.Name (@user.Username)</td>
+                    <td><DeleteButton OnClick="(() => DeleteUser(user))"/></td>
                 </tr>
             }
             @if (_users.Length == 0)
@@ -42,6 +47,20 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadUsers();
+    }
+
+    private async Task DeleteUser(User user)
+    {
+        await UserService.Delete(user.Username);
+        // TODO Why does this not work?
+        await LoadUsers();
+        await ToastService.Success("User deleted");
+    }
+
+    private async Task LoadUsers()
+    {
         _users = (await UserService.FindAllAsync()).ToArray();
     }
+
 }

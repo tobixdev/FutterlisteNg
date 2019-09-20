@@ -12,8 +12,16 @@
     left:7%;
 }
 
+div.col.payment-container {
+    padding-right: 100px;
+}
+
 .error-toast {
     background-color: red;
+}
+
+.success-toast {
+    background-color: green;
 }
 
 .invalid {
@@ -41,9 +49,9 @@
 }
 
 .btn-add-row:hover {
-    background-color: lightyellow;
+    background-color: #EEEEEE;
 }
 
 .btn-add-row:focus {
-    background-color: lightyellow;
+    background-color: #EEEEEE;
 }

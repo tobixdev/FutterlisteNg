@@ -14,18 +14,22 @@ namespace FutterlisteNg.Web.Service
 
         public async Task Error(string message)
         {
-            var payload = new ErrorToast(message);
+            var payload = new
+            {
+                html = $@"<i class=""material-icons"">cross</i> {message}",
+                classes = "error-toast"
+            };
             await _jsRuntime.InvokeVoidAsync("M.toast", payload);
         }
 
-        private class ErrorToast
+        public async Task Success(string message)
         {
-            public ErrorToast(string message)
+            var payload = new
             {
-                html = message;
-            }
-
-            public string html { get; set; }
+                html = $@"<i class=""material-icons"">check</i> {message}",
+                classes = "success-toast"
+            };
+            await _jsRuntime.InvokeVoidAsync("M.toast", payload);
         }
     }
 }

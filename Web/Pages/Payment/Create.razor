@@ -1,72 +1,71 @@
 @page "/payments/create"
 @using FutterlisteNg.Data.Model
 @using FutterlisteNg.Domain.Service
-@using Microsoft.AspNetCore.Authentication
+@using FutterlisteNg.Web.Components
+@using FutterlisteNg.Web.Service
 @using Microsoft.AspNetCore.Components
 @inject NavigationManager NavigationManager
 @inject IUserService UserService
 @inject IPaymentService PaymentService
+@inject IToastService ToastService
 
 
 <h2>New Payment</h2>
 
 <form>
-    <h5>Payer</h5>
-
     <div class="row">
-        <div class="input-field col s6">
+    <div class="col s6 payment-container">
+        <div class="input-field">
             <input id="payed-by" type="text" class="validate autocomplete" @bind="@_payment.PayedBy" />
             <label class="active" for="payed-by">Payed by</label>
         </div>
-    </div>
-    <div class="row">
-        <div class="input-field col s6">
+        <div class="input-field">
             <input id="description" type="text" class="validate" @bind="@_payment.Description" />
             <label class="active" for="description">Spent on</label>
         </div>
+
+        <p><b>Total:</b> @_payment.TotalAmount</p>
+
+        <button class="btn waves-effect waves-light" type="button" name="action" @onclick="CreatePayment">
+            Create Payment
+        </button>
     </div>
-    <h5>Benefiters</h5>
-    <table>
-    <thead>
-        <tr>
-            <th>Payed For</th>
-            <th>Amount</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var paymentLine in _payment.PaymentLines)
-        {
-        <tr>
-            <td>
-                <input id="payed-for" type="text" @bind="@paymentLine.PaidFor" />
-            </td>
-            <td>
-                <input id="amount" type="text" @bind="@paymentLine.Amount"/>
-            </td>
-            <td>
-                <a class="btn-small btn-red" @onclick="@(() => RemovePaymentLine(paymentLine))">
-                    <i class="material-icons">delete</i>
-                </a>
-            </td>
-        </tr>
-        }
-    </tbody>
-    </table>
-    <div class="row">
-        <div class="col s2"></div>
-        <div class="col s8">
-            <button class="btn btn-add-row" type="button" name="action" @onclick="InsertNewPaymentLine">
-                <span>Add New Row</span>
-            </button>
+    <div class="col s6">
+        <table>
+        <thead>
+            <tr>
+                <th>Payed For</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var paymentLine in _payment.PaymentLines)
+            {
+            <tr>
+                <td>
+                    <input id="payed-for" type="text" @bind="@paymentLine.PaidFor" />
+                </td>
+                <td>
+                    <input id="amount" type="text" @bind="@paymentLine.Amount"/>
+                </td>
+                <td>
+                    <DeleteButton OnClick="(() => RemovePaymentLine(paymentLine))"/>
+                </td>
+            </tr>
+            }
+        </tbody>
+        </table>
+        <div class="row">
+            <div class="col s2"></div>
+            <div class="col s8">
+                <button class="btn btn-add-row" type="button" name="action" @onclick="InsertNewPaymentLine">
+                    <span>Add New Row</span>
+                </button>
+            </div>
         </div>
     </div>
-
-    <p><b>Total:</b> @_payment.TotalAmount</p>
-
-    <button class="btn waves-effect waves-light" type="button" name="action" @onclick="CreatePayment">
-        Create Payment
-    </button>
+    </div>
 </form>
 
 @code {
@@ -92,6 +91,7 @@
     {
         await PaymentService.AddPaymentAsync(_payment);
         NavigationManager.NavigateTo("/payments");
+        await ToastService.Success("Payment created");
     }
 
 }

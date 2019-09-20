@@ -42,7 +42,7 @@ namespace FutterlisteNg.Tests.Domain
             
             Assert.That(result, Has.Count.EqualTo(1));
             Assert.That(result[0].Name, Is.EqualTo("Some User"));
-            Assert.That(result[0].ShortName, Is.EqualTo("su"));
+            Assert.That(result[0].Username, Is.EqualTo("su"));
         }
     }
 }

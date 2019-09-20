@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FutterlisteNg.Data.Model;
@@ -8,5 +9,6 @@ namespace FutterlisteNg.Domain.Service
     {
         Task<IEnumerable<Payment>> FindAllAsync();
         Task AddPaymentAsync(Payment payment);
+        Task Delete(Guid id);
     }
 }
