@@ -23,3 +23,27 @@
 .validation-message {
     color: red;
 }
+
+.btn-red {
+    background-color: red;
+}
+
+.btn-red:hover {
+    background-color: palevioletred;
+}
+
+.btn-add-row {
+    color: black;
+    background-color: white;
+    border-color: gray;
+    margin: 10px;
+    width: 100%;
+}
+
+.btn-add-row:hover {
+    background-color: lightyellow;
+}
+
+.btn-add-row:focus {
+    background-color: lightyellow;
+}

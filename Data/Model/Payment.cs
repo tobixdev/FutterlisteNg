@@ -35,5 +35,10 @@ namespace FutterlisteNg.Data.Model
         public List<PaymentLine> PaymentLines { get; set; }
 
         [BsonIgnore] public decimal TotalAmount => PaymentLines.Sum(pl => pl.Amount);
+
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}, {nameof(PayedBy)}: {PayedBy}, {nameof(Description)}: {Description}, {nameof(TotalAmount)}: {TotalAmount}";
+        }
     }
 }

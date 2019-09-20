@@ -27,7 +27,7 @@ namespace FutterlisteNg.Web
                 new MongoClient("mongodb://localhost:27017").GetDatabase("FutterlisteNg"));
             services.AddSingleton(typeof(IUserService), typeof(UserService));
             services.AddSingleton(typeof(IUserRepository), typeof(UserRepository));
-            services.AddSingleton(typeof(IToastService), typeof(ToastService));
+            services.AddScoped(typeof(IToastService), typeof(ToastService));
             services.AddSingleton(typeof(IPaymentService), typeof(PaymentService));
             services.AddSingleton(typeof(IPaymentRepository), typeof(PaymentRepository));
         }

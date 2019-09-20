@@ -18,5 +18,10 @@ namespace FutterlisteNg.Domain.Service
         {
             return await _paymentRepository.FindAllAsync();
         }
+
+        public async Task AddPaymentAsync(Payment payment)
+        {
+            await _paymentRepository.AddPaymentAsync(payment);
+        }
     }
 }
