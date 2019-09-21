@@ -28,7 +28,10 @@ else
             {
                 <tr>
                     <td>@user.Name (@user.Username)</td>
-                    <td><DeleteButton OnClick="(() => DeleteUser(user))"/></td>
+                    <td>
+                        <EditButton OnClick="(() => EditUser(user))" />
+                        <DeleteButton OnClick="(() => DeleteUser(user))"/>
+                    </td>
                 </tr>
             }
             @if (_users.Length == 0)
@@ -56,6 +59,11 @@ else
         // TODO Why does this not work?
         await LoadUsers();
         await ToastService.Success("User deleted");
+    }
+
+    private void EditUser(User user)
+    {
+        NavigationManager.NavigateTo("/users/edit/" + user.Username);
     }
 
     private async Task LoadUsers()

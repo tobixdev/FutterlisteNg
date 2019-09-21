@@ -17,6 +17,12 @@ namespace FutterlisteNg.Data.Repository
 
         private IMongoCollection<User> UserCollection => _mongoDatabase.GetCollection<User>(CollectionNames.Users);
 
+        public async Task<User> Get(string username)
+        {
+            var filter = new FilterDefinitionBuilder<User>().Eq(u => u.Username, username);
+            return await (await UserCollection.FindAsync(filter)).SingleAsync();
+        }
+
         public async Task AddAsync(User toAdd)
         {
             var usersWithName = await FindUsersWithUsername(toAdd.Username);
@@ -29,9 +35,7 @@ namespace FutterlisteNg.Data.Repository
 
         private async Task<List<User>> FindUsersWithUsername(string username)
         {
-            var filter = new FilterDefinitionBuilder<User>()
-                .Eq(u => u.Username, username);
-
+            var filter = CreateUsernameFilter(username);
             var cursor = await UserCollection.FindAsync(filter);
             return await cursor.ToListAsync();
         }
@@ -49,10 +53,19 @@ namespace FutterlisteNg.Data.Repository
 
         public async Task DeleteAsync(string username)
         {
-            var filter = new FilterDefinitionBuilder<User>()
-                .Eq(u => u.Username, username);
+            await UserCollection.DeleteOneAsync(CreateUsernameFilter(username));
+        }
 
-            await UserCollection.DeleteOneAsync(filter);
+        public async Task UpdateAsync(User toUpdate)
+        {
+            var filter = CreateUsernameFilter(toUpdate.Username);
+            await UserCollection.FindOneAndReplaceAsync(filter, toUpdate);
+        }
+
+        private static FilterDefinition<User> CreateUsernameFilter(string username)
+        {
+            return new FilterDefinitionBuilder<User>()
+                .Eq(u => u.Username, username);
         }
     }
 }

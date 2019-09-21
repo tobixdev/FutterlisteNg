@@ -24,6 +24,13 @@ namespace FutterlisteNg.Domain.Service
             return await _userRepository.FindAllAsync();
         }
 
+        public async Task<User> GetAsync(string username)
+        {
+            await EnsureUserExists(username);
+
+            return await _userRepository.Get(username);
+        }
+
         public async Task AddAsync(User toAdd)
         {
             if (string.IsNullOrEmpty(toAdd.Name) || string.IsNullOrEmpty(toAdd.Username))
@@ -38,11 +45,23 @@ namespace FutterlisteNg.Domain.Service
             if (string.IsNullOrEmpty(username))
                 throw new ValidationException("Username must not be null or empty.");
             
-            if (!(await _userRepository.Exists(username)))
-                throw new NotFoundException($"User with username '{username}' does not exist.");
+            await EnsureUserExists(username);
             
             s_log.Info("Deleting user " + username);
             await _userRepository.DeleteAsync(username);
+        }
+
+        public async Task UpdateAsync(User toUpdate)
+        {
+            await EnsureUserExists(toUpdate.Username);
+
+            await _userRepository.UpdateAsync(toUpdate);
+        }
+
+        private async Task EnsureUserExists(string username)
+        {
+            if (!await _userRepository.Exists(username))
+                throw new NotFoundException($"User with username '{username}' does not exist.");
         }
     }
 }

@@ -1,0 +1,32 @@
+@using FutterlisteNg.Data.Model
+@using FutterlisteNg.Domain.Service
+@using FutterlisteNg.Web.Service
+@using Microsoft.AspNetCore.Components
+@inject IUserService UserService
+@inject IToastService ToastService
+@inject NavigationManager NavigationManager
+
+
+<div class="row">
+    <div class="input-field col s5">
+        <input id="shortName" type="text" class="validate" @bind="@User.Username" disabled="@UsernameReadOnly" />
+        <label class="active" for="shortName">Username</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="input-field col s5">
+        <input id="name" type="text" class="validate" @bind="@User.Name" />
+        <label class="active" for="name">Name</label>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public User User { get; set; }
+
+    [Parameter]
+    public bool UsernameReadOnly { get; set; } = false;
+
+}

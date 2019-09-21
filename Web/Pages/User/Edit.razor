@@ -1,0 +1,39 @@
+@page "/users/edit/{username}"
+@using FutterlisteNg.Data.Model
+@using FutterlisteNg.Domain.Service
+@using FutterlisteNg.Web.Service
+@using Microsoft.AspNetCore.Components
+@inject IUserService UserService
+@inject IToastService ToastService
+@inject NavigationManager NavigationManager
+
+
+<h2>Edit User</h2>
+
+<form>
+    <UserDetails User="@_user" UsernameReadOnly="true"/>
+
+    <button class="btn waves-effect waves-light" type="button" name="action" @onclick="UpdateUser">
+        Edit User
+    </button>
+</form>
+
+
+@code {
+    [Parameter]
+    public string Username { get; set; }
+    
+    private User _user = new User();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _user = await UserService.GetAsync(Username);
+    }
+
+    private async Task UpdateUser()
+    {
+        await UserService.UpdateAsync(_user);
+        NavigationManager.NavigateTo("/users");
+        await ToastService.Success("User updated");
+    }
+}
