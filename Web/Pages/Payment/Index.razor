@@ -62,7 +62,7 @@ else
 
     private async Task DeletePayment(Payment payment)
     {
-        PaymentService.Delete(payment.Id);
+        PaymentService.DeleteAsync(payment.Id);
         await LoadPayments();
         await ToastService.Success("Payment deleted");
     }

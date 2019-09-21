@@ -15,8 +15,10 @@ namespace FutterlisteNg.Setup
             InsertTestData(mongoClient.GetDatabase("FutterlisteNg"));
         }
 
-        public static void InsertTestData(IMongoDatabase database)
+        public static InsertedData InsertTestData(IMongoDatabase database)
         {
+            var insertedData = new InsertedData();
+            
             var eric = new User("Eric Cartman", "Eric");
             var stan = new User("Stan Marsh", "Stan");
             var kenny = new User("Kenny McCormick", "Kenny");
@@ -24,6 +26,12 @@ namespace FutterlisteNg.Setup
             var token = new User("Token Black", "Token");
             database.GetCollection<User>(CollectionNames.Users).InsertMany(new[] {eric, stan, kenny, kyle, token});
 
+            insertedData.InsertedUsers.Eric = eric;
+            insertedData.InsertedUsers.Stan = stan;
+            insertedData.InsertedUsers.Kenny = kenny;
+            insertedData.InsertedUsers.Kyle = kyle;
+            insertedData.InsertedUsers.Token = token;
+            
             var payment1 = new PaymentBuilder().WithPayedBy("Eric")
                 .WithDescription("Kentucky Fried Chicken")
                 .WithPaymentLine("Eric", 7.5m)
@@ -37,6 +45,11 @@ namespace FutterlisteNg.Setup
                 .WithPaymentLine("Kyle", 10m)
                 .Build();
             database.GetCollection<Payment>(CollectionNames.Payments).InsertMany(new[] { payment1, payment2});
+
+            insertedData.InsertedPayments.KFC = payment1;
+            insertedData.InsertedPayments.ComicBooks = payment2;
+
+            return insertedData;
         }
     }
 }

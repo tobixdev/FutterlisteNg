@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FutterlisteNg.Data;
 using FutterlisteNg.Data.Model;
 using FutterlisteNg.Data.Repository;
+using MongoDB.Driver.Core.Misc;
 
 namespace FutterlisteNg.Domain.Service
 {
@@ -20,14 +22,17 @@ namespace FutterlisteNg.Domain.Service
             return await _paymentRepository.FindAllAsync();
         }
 
-        public async Task AddPaymentAsync(Payment payment)
+        public async Task AddAsync(Payment payment)
         {
             await _paymentRepository.AddPaymentAsync(payment);
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            await _paymentRepository.Delete(id);
+            if(!await _paymentRepository.ExistsAsync(id))
+                throw new NotFoundException($"Payment with Id '{id}' not found");
+            
+            await _paymentRepository.DeleteAsync(id);
         }
     }
 }

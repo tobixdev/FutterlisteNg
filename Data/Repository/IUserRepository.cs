@@ -9,6 +9,6 @@ namespace FutterlisteNg.Data.Repository
         Task AddAsync(User toAdd);
         Task<IEnumerable<User>> FindAllAsync();
         Task<bool> Exists(string username);
-        Task Delete(string username);
+        Task DeleteAsync(string username);
     }
 }

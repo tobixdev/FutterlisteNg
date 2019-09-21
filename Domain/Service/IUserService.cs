@@ -7,7 +7,7 @@ namespace FutterlisteNg.Domain.Service
     public interface IUserService
     {
         Task<IEnumerable<User>> FindAllAsync();
-        Task Add(User toAdd);
-        Task Delete(string username);
+        Task AddAsync(User toAdd);
+        Task DeleteAsync(string username);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -85,6 +86,34 @@ namespace FutterlisteNg.Tests.Data
             var payments = await _paymentRepository.FindAllAsync();
             
             payments.Should().HaveCount(2);
+        }
+
+        [Test]
+        public async Task Delete_WithExistentPayment_ShouldDeletePayment()
+        {
+            var id = TestData.InsertedPayments.KFC.Id;
+            
+            await _paymentRepository.DeleteAsync(id);
+
+            (await _paymentRepository.ExistsAsync(id)).Should().BeFalse();
+        }
+
+        [Test]
+        public async Task Exists_WithExistentPayment_ShouldReturnTrue()
+        {
+            var id = TestData.InsertedPayments.KFC.Id;
+            
+            var result = await _paymentRepository.ExistsAsync(id);
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task Exists_WithNonExistentPayment_ShouldReturnFalse()
+        {
+            var result = await _paymentRepository.ExistsAsync(Guid.Empty);
+
+            result.Should().BeFalse();
         }
 
         private async Task AddPayments(params Payment[] payments)

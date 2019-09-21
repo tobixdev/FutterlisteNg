@@ -36,7 +36,7 @@
 
     private async Task CreateUser()
     {
-        await UserService.Add (_user);
+        await UserService.AddAsync (_user);
         NavigationManager.NavigateTo("/users");
         await ToastService.Success("User created");
     }

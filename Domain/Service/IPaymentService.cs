@@ -8,7 +8,7 @@ namespace FutterlisteNg.Domain.Service
     public interface IPaymentService
     {
         Task<IEnumerable<Payment>> FindAllAsync();
-        Task AddPaymentAsync(Payment payment);
-        Task Delete(Guid id);
+        Task AddAsync(Payment payment);
+        Task DeleteAsync(Guid id);
     }
 }

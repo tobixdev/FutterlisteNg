@@ -12,10 +12,12 @@ namespace FutterlisteNg.Tests.Data
 
         protected IMongoDatabase Database => _mongoClient.GetDatabase(c_databaseName);
 
+        protected InsertedData TestData { get; private set; }
+
         [SetUp]
         public void SetUpBase()
         {
-            DatabaseSetup.InsertTestData(Database);
+            TestData = DatabaseSetup.InsertTestData(Database);
         }
 
         [TearDown]

@@ -89,7 +89,7 @@
     
     private async Task CreatePayment()
     {
-        await PaymentService.AddPaymentAsync(_payment);
+        await PaymentService.AddAsync(_payment);
         NavigationManager.NavigateTo("/payments");
         await ToastService.Success("Payment created");
     }

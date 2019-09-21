@@ -52,7 +52,7 @@ else
 
     private async Task DeleteUser(User user)
     {
-        await UserService.Delete(user.Username);
+        await UserService.DeleteAsync(user.Username);
         // TODO Why does this not work?
         await LoadUsers();
         await ToastService.Success("User deleted");

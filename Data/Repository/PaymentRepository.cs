@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FutterlisteNg.Data.Model;
 using MongoDB.Driver;
@@ -43,10 +44,17 @@ namespace FutterlisteNg.Data.Repository
             return await cursor.ToListAsync();
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var filter = new FilterDefinitionBuilder<Payment>().Eq(p => p.Id, id);
             await PaymentCollection.DeleteOneAsync(filter);
+        }
+
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            var filter = new FilterDefinitionBuilder<Payment>().Eq(p => p.Id, id);
+            var result = (await PaymentCollection.FindAsync(filter)).ToEnumerable();
+            return result.Any();
         }
     }
 }

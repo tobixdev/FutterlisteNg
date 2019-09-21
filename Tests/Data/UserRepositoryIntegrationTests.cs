@@ -28,7 +28,8 @@ namespace FutterlisteNg.Tests.Data
 
             Func<Task> act = async () => await _sut.AddAsync(user);
 
-            await act.Should().ThrowAsync<DuplicateException>();
+            await act.Should().ThrowAsync<DuplicateException>()
+                .WithMessage("User with short name 'TU' already exists.");
         }
 
         [Test]
@@ -41,6 +42,30 @@ namespace FutterlisteNg.Tests.Data
 
             result.Should().HaveCount(6);
             result.Should().ContainEquivalentOf(user);
+        }
+
+        [Test]
+        public async Task Exists_WithExistentUser_ShouldReturnTrue()
+        {
+            var result = await _sut.Exists("Eric");
+            
+            result.Should().Be(true);
+        }
+
+        [Test]
+        public async Task Exists_WithNonExistentUser_ShouldReturnTrue()
+        {
+            var result = await _sut.Exists("NonExistent");
+            
+            result.Should().Be(false);
+        }
+
+        [Test]
+        public async Task Delete_WithExistentUser_ShouldDeleteUser()
+        {
+            await _sut.DeleteAsync("Eric");
+
+            (await _sut.Exists("Eric")).Should().Be(false);
         }
     }
 }

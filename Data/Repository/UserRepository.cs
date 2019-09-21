@@ -47,7 +47,7 @@ namespace FutterlisteNg.Data.Repository
             return (await FindUsersWithUsername(username)).Count > 0;
         }
 
-        public async Task Delete(string username)
+        public async Task DeleteAsync(string username)
         {
             var filter = new FilterDefinitionBuilder<User>()
                 .Eq(u => u.Username, username);
