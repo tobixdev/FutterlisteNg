@@ -19,11 +19,11 @@ namespace FutterlisteNg.Setup
         {
             var insertedData = new InsertedData();
             
-            var eric = new User("Eric Cartman", "Eric");
-            var stan = new User("Stan Marsh", "Stan");
-            var kenny = new User("Kenny McCormick", "Kenny");
-            var kyle = new User("Kyle Broflovski", "Kyle");
-            var token = new User("Token Black", "Token");
+            var eric = new User("Eric", "Eric Cartman");
+            var stan = new User("Stan", "Stan Marsh");
+            var kenny = new User("Kenny", "Kenny McCormick");
+            var kyle = new User("Kyle", "Kyle Broflovski");
+            var token = new User("Token", "Token Black");
             database.GetCollection<User>(CollectionNames.Users).InsertMany(new[] {eric, stan, kenny, kyle, token});
 
             insertedData.InsertedUsers.Eric = eric;

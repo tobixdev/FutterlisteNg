@@ -23,7 +23,7 @@ namespace FutterlisteNg.Tests.Data
         [Test]
         public async Task Add_WithAlreadyExistingUser_ThrowsDuplicateException()
         {
-            var user = new User("Test User", "TU");
+            var user = new User("TU", "Test User");
             await _sut.AddAsync(user);
 
             Func<Task> act = async () => await _sut.AddAsync(user);
@@ -35,7 +35,7 @@ namespace FutterlisteNg.Tests.Data
         [Test]
         public async Task FindAll_AfterAdd_ShouldFindAddedUser()
         {
-            var user = new User("TestUser", "TU");
+            var user = new User("TU", "TestUser");
             await _sut.AddAsync(user);
 
             var result = (await _sut.FindAllAsync()).ToArray();
@@ -66,6 +66,19 @@ namespace FutterlisteNg.Tests.Data
             await _sut.DeleteAsync("Eric");
 
             (await _sut.Exists("Eric")).Should().Be(false);
+        }
+
+        [Test]
+        public void Get_WithExistingUser_ShouldReturnUser()
+        {
+            // TODO
+            _sut.Get("");
+        }
+
+        [Test]
+        public void Update()
+        {
+            // TODO
         }
     }
 }

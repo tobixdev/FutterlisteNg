@@ -11,7 +11,7 @@ namespace FutterlisteNg.Data.Model
         {
         }
 
-        public User(string name, string username)
+        public User(string username, string name)
         {
             Name = name;
             Username = username;

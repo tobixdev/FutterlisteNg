@@ -39,7 +39,7 @@ namespace FutterlisteNg.Tests.Domain
         [Test]
         public async Task All_WithNonEmpty_ReturnsNonEmpty()
         {
-            var users = new List<User> {new User("Some User", "su")};
+            var users = new List<User> {new User("su", "Some User")};
             A.CallTo(() => _userRepository.FindAllAsync()).Returns(users);
             
             var result = (await _sut.FindAllAsync()).ToList();
@@ -62,7 +62,7 @@ namespace FutterlisteNg.Tests.Domain
         [Test]
         public async Task Add_WithNoUsername_ShouldThrowValidationException()
         {
-            var user = new User("test", string.Empty);
+            var user = new User(string.Empty, "test");
 
             Func<Task> act = async () => await _sut.AddAsync(user);
 
@@ -72,7 +72,7 @@ namespace FutterlisteNg.Tests.Domain
         [Test]
         public async Task Add_WithNoName_ShouldThrowValidationException()
         {
-            var user = new User(string.Empty, "Username");
+            var user = new User("Username", string.Empty);
 
             Func<Task> act = async () => await _sut.AddAsync(user);
 
@@ -97,6 +97,47 @@ namespace FutterlisteNg.Tests.Domain
 
             A.CallTo(() => _userRepository.DeleteAsync("Username"))
                 .MustHaveHappened(1, Times.Exactly);
+        }
+
+        [Test]
+        public async Task Get_WithExistingUser_ShouldReturnUser()
+        {
+            var user = new User();
+            A.CallTo(() => _userRepository.Exists("Eric")).Returns(true);
+            A.CallTo(() => _userRepository.Get("Eric")).Returns(user);
+            
+            var result = await _sut.GetAsync("Eric");
+
+            result.Should().BeSameAs(user);
+        }
+
+        [Test]
+        public async Task Get_WithNotExistingUser_ShouldThrowNotFoundException()
+        {
+            Func<Task> act = async () => await _sut.GetAsync("Not Existing");
+
+            await act.Should().ThrowAsync<NotFoundException>()
+                .WithMessage("User with username 'Not Existing' does not exist.");
+        }
+
+        [Test]
+        public async Task Update_WithExistingUser_ShouldUpdateUser()
+        {
+            A.CallTo(() => _userRepository.Exists("Eric")).Returns(true);
+            var user = new User("Eric", "Updated Name");
+            
+            await _sut.UpdateAsync(user);
+
+            A.CallTo(() => _userRepository.UpdateAsync(user)).MustHaveHappened(1, Times.Exactly);
+        }
+
+        [Test]
+        public async Task Update_WithNotExistingUser_ShouldThrowNotFoundException()
+        {
+            Func<Task> act = async () => await _sut.GetAsync("Not Existing");
+
+            await act.Should().ThrowAsync<NotFoundException>()
+                .WithMessage("User with username 'Not Existing' does not exist.");
         }
     }
 }
