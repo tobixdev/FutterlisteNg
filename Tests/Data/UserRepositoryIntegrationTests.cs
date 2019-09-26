@@ -69,16 +69,22 @@ namespace FutterlisteNg.Tests.Data
         }
 
         [Test]
-        public void Get_WithExistingUser_ShouldReturnUser()
+        public async Task Get_WithExistingUser_ShouldReturnUser()
         {
-            // TODO
-            _sut.Get("");
+            var result = await _sut.GetAsync("Eric");
+
+            result.Username.Should().Be("Eric");
         }
 
         [Test]
-        public void Update()
+        public async Task Update_WithExistentUser_ShouldUpdateUser()
         {
-            // TODO
+            var user = new User("Eric", "UpdatedName");
+
+            await _sut.UpdateAsync(user);
+
+            var updatedUser = await _sut.GetAsync("Eric");
+            updatedUser.Name.Should().Be("UpdatedName");
         }
     }
 }

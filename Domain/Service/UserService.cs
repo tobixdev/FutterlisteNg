@@ -28,7 +28,7 @@ namespace FutterlisteNg.Domain.Service
         {
             await EnsureUserExists(username);
 
-            return await _userRepository.Get(username);
+            return await _userRepository.GetAsync(username);
         }
 
         public async Task AddAsync(User toAdd)

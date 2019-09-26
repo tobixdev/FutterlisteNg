@@ -104,7 +104,7 @@ namespace FutterlisteNg.Tests.Domain
         {
             var user = new User();
             A.CallTo(() => _userRepository.Exists("Eric")).Returns(true);
-            A.CallTo(() => _userRepository.Get("Eric")).Returns(user);
+            A.CallTo(() => _userRepository.GetAsync("Eric")).Returns(user);
             
             var result = await _sut.GetAsync("Eric");
 

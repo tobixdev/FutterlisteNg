@@ -17,7 +17,7 @@ namespace FutterlisteNg.Data.Repository
 
         private IMongoCollection<User> UserCollection => _mongoDatabase.GetCollection<User>(CollectionNames.Users);
 
-        public async Task<User> Get(string username)
+        public async Task<User> GetAsync(string username)
         {
             var filter = new FilterDefinitionBuilder<User>().Eq(u => u.Username, username);
             return await (await UserCollection.FindAsync(filter)).SingleAsync();
