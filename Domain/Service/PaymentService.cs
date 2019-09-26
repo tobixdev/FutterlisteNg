@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using FutterlisteNg.Data;
 using FutterlisteNg.Data.Model;
 using FutterlisteNg.Data.Repository;
+using FutterlisteNg.Domain.Extensions;
 using FutterlisteNg.Domain.Model;
+using FutterlisteNg.Domain.Validation;
 using MongoDB.Driver.Core.Misc;
 
 namespace FutterlisteNg.Domain.Service
@@ -20,6 +23,9 @@ namespace FutterlisteNg.Domain.Service
             _paymentRepository = paymentRepository;
             _userRepository = userRepository;
         }
+        
+        private PaymentValidatorBase CreateValidator => new PaymentCreateValidator(_userRepository);
+        private PaymentValidatorBase UpdateValidator => new PaymentUpdateValidator(_userRepository, _paymentRepository);
 
         public async Task<IEnumerable<Payment>> FindAllAsync()
         {
@@ -33,22 +39,24 @@ namespace FutterlisteNg.Domain.Service
 
         public async Task AddAsync(Payment payment)
         {
+            (await CreateValidator.ValidateAsync(payment)).ThrowIfInvalid();
             await _paymentRepository.AddPaymentAsync(payment);
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            if(!await _paymentRepository.ExistsAsync(id))
+            if (!await _paymentRepository.ExistsAsync(id))
                 throw new NotFoundException($"Payment with Id '{id}' not found");
-            
+
             await _paymentRepository.DeleteAsync(id);
         }
 
         public async Task UpdateAsync(Payment payment)
         {
-            if(!await _paymentRepository.ExistsAsync(payment.Id))
+            if (!await _paymentRepository.ExistsAsync(payment.Id))
                 throw new NotFoundException($"Payment with Id '{payment.Id}' not found");
 
+            (await UpdateValidator.ValidateAsync(payment)).ThrowIfInvalid();
             await _paymentRepository.UpdateAsync(payment);
         }
 

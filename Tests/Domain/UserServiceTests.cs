@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace FutterlisteNg.Tests.Domain
 {
     [TestFixture]
-    public class UserServiceTest
+    public class UserServiceTestsBase
     {
         private IUserRepository _userRepository;
         private IUserService _sut;
@@ -60,23 +60,13 @@ namespace FutterlisteNg.Tests.Domain
         }
 
         [Test]
-        public async Task Add_WithNoUsername_ShouldThrowValidationException()
+        public async Task Add_WithInvalidUser_ShouldThrowValidationException()
         {
             var user = new User(string.Empty, "test");
 
             Func<Task> act = async () => await _sut.AddAsync(user);
 
-            await act.Should().ThrowAsync<ValidationException>().WithMessage("User must have a Name and Username");
-        }
-
-        [Test]
-        public async Task Add_WithNoName_ShouldThrowValidationException()
-        {
-            var user = new User("Username", string.Empty);
-
-            Func<Task> act = async () => await _sut.AddAsync(user);
-
-            await act.Should().ThrowAsync<ValidationException>().WithMessage("User must have a Name and Username");
+            await act.Should().ThrowAsync<ValidationException>();
         }
 
         [Test]

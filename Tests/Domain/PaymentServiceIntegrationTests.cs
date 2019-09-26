@@ -1,8 +1,11 @@
 using System.Linq;
 using System.Threading.Tasks;
+using FakeItEasy;
 using FluentAssertions;
 using FluentAssertions.Execution;
+using FluentValidation;
 using FutterlisteNg.Data;
+using FutterlisteNg.Data.Model;
 using FutterlisteNg.Data.Model.Builder;
 using FutterlisteNg.Data.Repository;
 using FutterlisteNg.Domain.Service;

@@ -5,30 +5,32 @@ using FluentValidation;
 using FluentValidation.Results;
 using FutterlisteNg.Data.Model;
 using FutterlisteNg.Data.Repository;
+using FutterlisteNg.Domain.Model;
 using FutterlisteNg.Domain.Validation;
 using NUnit.Framework;
 
 namespace FutterlisteNg.Tests.Domain.Validation
 {
-    [TestFixture]
-    public class UserValidatorTests
+    public abstract class UserValidatorTestsBase
     {
-        private IValidator<User> _userValidator;
-        private IUserRepository _userRepository;
+        protected IValidator<User> Sut;
+        protected IUserRepository UserRepository;
 
         [SetUp]
-        public void SetUp()
+        public void SetUpBase()
         {
-            _userRepository = A.Fake<IUserRepository>();
-            _userValidator = new UserValidator(_userRepository);
+            UserRepository = A.Fake<IUserRepository>();
+            Sut = CreateValidator();
         }
-
+        
+        protected abstract IValidator<User> CreateValidator();
+        
         [Test]
         public void Validate_WithValidUser_ShouldReturnValidResult()
         {
             var user = new User("Username", "real name");
 
-            var validationResult = _userValidator.Validate(user);
+            var validationResult = Sut.Validate(user);
 
             validationResult.IsValid.Should().BeTrue();
         }
@@ -38,7 +40,7 @@ namespace FutterlisteNg.Tests.Domain.Validation
         {
             var user = new User(null, "real name");
 
-            var validationResult = _userValidator.Validate(user);
+            var validationResult = Sut.Validate(user);
 
             AssertSingleError(validationResult, "Username", "'Username' must not be empty.");
         }
@@ -48,20 +50,9 @@ namespace FutterlisteNg.Tests.Domain.Validation
         {
             var user = new User("u", "real name");
 
-            var validationResult = _userValidator.Validate(user);
+            var validationResult = Sut.Validate(user);
 
             AssertSingleError(validationResult, "Username", "The length of 'Username' must be at least 2 characters. You entered 1 characters.");
-        }
-
-        [Test]
-        public void Validate_WithExistingUsername_ShouldReturnInvalidResult()
-        {
-            A.CallTo(() => _userRepository.Exists("Username")).Returns(true);
-            var user = new User("Username", "real name");
-
-            var validationResult = _userValidator.Validate(user);
-
-            AssertSingleError(validationResult, "Username", "User with username 'Username' already exists.");
         }
 
         [Test]
@@ -69,7 +60,7 @@ namespace FutterlisteNg.Tests.Domain.Validation
         {
             var user = new User("Username", null);
 
-            var validationResult = _userValidator.Validate(user);
+            var validationResult = Sut.Validate(user);
 
             AssertSingleError(validationResult, "Name", "'Name' must not be empty.");
         }
@@ -79,13 +70,12 @@ namespace FutterlisteNg.Tests.Domain.Validation
         {
             var user = new User("Username", "a");
 
-            var validationResult = _userValidator.Validate(user);
+            var validationResult = Sut.Validate(user);
 
             AssertSingleError(validationResult, "Name", "The length of 'Name' must be at least 2 characters. You entered 1 characters.");
         }
 
-
-        private static void AssertSingleError(ValidationResult validationResult, string propertyName, string errorMessage)
+        protected void AssertSingleError(ValidationResult validationResult, string propertyName, string errorMessage)
         {
             validationResult.IsValid.Should().BeFalse();
             validationResult.Errors.Should().HaveCount(1);

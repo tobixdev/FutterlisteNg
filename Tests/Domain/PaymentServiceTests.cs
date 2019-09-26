@@ -4,8 +4,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
+using FluentValidation;
 using FutterlisteNg.Data;
 using FutterlisteNg.Data.Model;
+using FutterlisteNg.Data.Model.Builder;
 using FutterlisteNg.Data.Repository;
 using FutterlisteNg.Domain.Service;
 using NUnit.Framework;
@@ -29,7 +31,7 @@ namespace FutterlisteNg.Tests.Domain
         [Test]
         public async Task Add_ShouldDelegateCallToRepository()
         {
-            var payment = new Payment();
+            var payment = PaymentBuilder.Valid.WithId(new Guid("14ACFA68-E5B9-4A6F-8269-163D56CE3F22")).Build();
 
             await _sut.AddAsync(payment);
 
@@ -82,7 +84,7 @@ namespace FutterlisteNg.Tests.Domain
         public async Task Update_WithExistentPayment_ShouldDelegateCallToRepository()
         {
             var id = new Guid("497AABB3-8F7C-4173-964F-564DB53B0732");
-            var payment = new Payment {Id = id};
+            var payment = PaymentBuilder.Valid.WithId(id).Build();
             A.CallTo(() => _paymentRepository.ExistsAsync(id)).Returns(true);
             
             await _sut.UpdateAsync(payment);

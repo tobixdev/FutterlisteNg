@@ -11,29 +11,32 @@ using NUnit.Framework;
 
 namespace FutterlisteNg.Tests.Domain.Validation
 {
-    [TestFixture]
-    public class PaymentValidatorTests
+    public abstract class PaymentValidatorTestsBase
     {
-        private IValidator<Payment> _paymentValidator;
-        private IUserRepository _userRepository;
+        protected IValidator<Payment> Sut;
+        protected IUserRepository UserRepository;
 
         [SetUp]
-        public void SetUp()
+        public void SetUpBase()
         {
-            _userRepository = A.Fake<IUserRepository>();
-            A.CallTo(() => _userRepository.Exists("Existing")).Returns(true);
-            _paymentValidator = new PaymentValidator(_userRepository);
+            UserRepository = A.Fake<IUserRepository>();
+            A.CallTo(() => UserRepository.Exists("Existing")).Returns(true);
+            Sut = CreateValidator();
         }
+
+        protected abstract IValidator<Payment> CreateValidator();
+        
+        protected abstract PaymentBuilder CreatePaymentBuilder(string payedBy);
 
         [Test]
         public void Validate_WithValidPayment_ShouldReturnValidResult()
         {
-            var payment = new PaymentBuilder("Existing")
+            var payment = CreatePaymentBuilder("Existing")
                 .WithDescription("I payed money!")
                 .WithPaymentLine("Existing", 10)
                 .Build();
 
-            var validationResult = _paymentValidator.Validate(payment);
+            var validationResult = Sut.Validate(payment);
 
             validationResult.IsValid.Should().BeTrue();
         }
@@ -41,11 +44,11 @@ namespace FutterlisteNg.Tests.Domain.Validation
         [Test]
         public void Validate_WithNoPayedBy_ShouldReturnInvalidResult()
         {
-            var payment = new PaymentBuilder(null)
+            var payment = CreatePaymentBuilder(null)
                 .WithDescription("I payed money!")
                 .Build();
 
-            var validationResult = _paymentValidator.Validate(payment);
+            var validationResult = Sut.Validate(payment);
 
             AssertSingleError(validationResult, "PayedBy", "'Payed By' must not be empty.");
         }
@@ -53,11 +56,11 @@ namespace FutterlisteNg.Tests.Domain.Validation
         [Test]
         public void Validate_WithNoDescription_ShouldReturnInvalidResult()
         {
-            var payment = new PaymentBuilder("Existing")
+            var payment = CreatePaymentBuilder("Existing")
                 .WithDescription(null)
                 .Build();
 
-            var validationResult = _paymentValidator.Validate(payment);
+            var validationResult = Sut.Validate(payment);
 
             AssertSingleError(validationResult, "Description", "'Description' must not be empty.");
         }
@@ -65,11 +68,11 @@ namespace FutterlisteNg.Tests.Domain.Validation
         [Test]
         public void Validate_WithTooShortDescription_ShouldReturnInvalidResult()
         {
-            var payment = new PaymentBuilder("Existing")
+            var payment = CreatePaymentBuilder("Existing")
                 .WithDescription("ab")
                 .Build();
 
-            var validationResult = _paymentValidator.Validate(payment);
+            var validationResult = Sut.Validate(payment);
 
             AssertSingleError(validationResult, "Description",
                 "The length of 'Description' must be at least 4 characters. You entered 2 characters.");
@@ -78,11 +81,11 @@ namespace FutterlisteNg.Tests.Domain.Validation
         [Test]
         public void Validate_WithNotExistingPayedBy_ShouldReturnInvalidResult()
         {
-            var payment = new PaymentBuilder("NotExisting")
+            var payment = CreatePaymentBuilder("NotExisting")
                 .WithDescription("I payed money!")
                 .Build();
 
-            var validationResult = _paymentValidator.Validate(payment);
+            var validationResult = Sut.Validate(payment);
 
             AssertSingleError(validationResult, "PayedBy", "User 'NotExisting' does not exist.");
         }
@@ -90,12 +93,12 @@ namespace FutterlisteNg.Tests.Domain.Validation
         [Test]
         public void Validate_WithNegativeAmount_ShouldReturnInvalidResult()
         {
-            var payment = new PaymentBuilder("Existing")
+            var payment = CreatePaymentBuilder("Existing")
                 .WithDescription("I payed money!")
                 .WithPaymentLine("Existing", -1)
                 .Build();
 
-            var validationResult = _paymentValidator.Validate(payment);
+            var validationResult = Sut.Validate(payment);
 
             AssertSingleError(validationResult, "PaymentLines[0].Amount", "'Amount' must be greater than '0'.");
         }
@@ -103,12 +106,12 @@ namespace FutterlisteNg.Tests.Domain.Validation
         [Test]
         public void Validate_WithNoPaidFor_ShouldReturnInvalidResult()
         {
-            var payment = new PaymentBuilder("Existing")
+            var payment = CreatePaymentBuilder("Existing")
                 .WithDescription("I payed money!")
                 .WithPaymentLine(null, 1)
                 .Build();
 
-            var validationResult = _paymentValidator.Validate(payment);
+            var validationResult = Sut.Validate(payment);
 
             AssertSingleError(validationResult, "PaymentLines[0].PaidFor", "'Paid For' must not be empty.");
         }
@@ -116,17 +119,17 @@ namespace FutterlisteNg.Tests.Domain.Validation
         [Test]
         public void Validate_WithNonExistentPaidFor_ShouldReturnInvalidResult()
         {
-            var payment = new PaymentBuilder("Existing")
+            var payment = CreatePaymentBuilder("Existing")
                 .WithDescription("I payed money!")
                 .WithPaymentLine("NonExisting", 1)
                 .Build();
 
-            var validationResult = _paymentValidator.Validate(payment);
+            var validationResult = Sut.Validate(payment);
 
             AssertSingleError(validationResult, "PaymentLines[0].PaidFor", "User 'NonExisting' does not exist.");
         }
 
-        private static void AssertSingleError(ValidationResult validationResult, string propertyName,
+        protected void AssertSingleError(ValidationResult validationResult, string propertyName,
             string errorMessage)
         {
             validationResult.IsValid.Should().BeFalse();

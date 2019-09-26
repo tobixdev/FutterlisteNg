@@ -1,13 +1,15 @@
+using System.Collections.Generic;
+using FluentValidation.Results;
+
 namespace FutterlisteNg.Domain.Exception
 {
     public class ValidationException : System.Exception
     {
-        public ValidationException(string message) : base(message)
-        {
-        }
+        public IList<ValidationFailure> Failures { get; }
 
-        public ValidationException(string message, System.Exception innerException) : base(message, innerException)
+        public ValidationException(IList<ValidationFailure> failures) : base($"Validation failed with {failures.Count} errors.")
         {
+            Failures = failures;
         }
     }
 }

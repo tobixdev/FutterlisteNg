@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentValidation;
 using FutterlisteNg.Data;
 using FutterlisteNg.Data.Model;
 using FutterlisteNg.Data.Repository;
-using FutterlisteNg.Domain.Exception;
+using FutterlisteNg.Domain.Extensions;
+using FutterlisteNg.Domain.Validation;
 using log4net;
+using ValidationException = FutterlisteNg.Domain.Exception.ValidationException;
 
 namespace FutterlisteNg.Domain.Service
 {
@@ -18,6 +22,9 @@ namespace FutterlisteNg.Domain.Service
         {
             _userRepository = userRepository;
         }
+        
+        private IValidator<User> CreateValidator => new UserCreateValidator(_userRepository);
+        private IValidator<User> UpdateValidator => new UserUpdateValidator(_userRepository);
 
         public async Task<IEnumerable<User>> FindAllAsync()
         {
@@ -33,8 +40,7 @@ namespace FutterlisteNg.Domain.Service
 
         public async Task AddAsync(User toAdd)
         {
-            if (string.IsNullOrEmpty(toAdd.Name) || string.IsNullOrEmpty(toAdd.Username))
-                throw new ValidationException("User must have a Name and Username");
+            (await CreateValidator.ValidateAsync(toAdd)).ThrowIfInvalid();
             
             s_log.Info("Creating new User: " + toAdd);
             await _userRepository.AddAsync(toAdd);
@@ -43,7 +49,7 @@ namespace FutterlisteNg.Domain.Service
         public async Task DeleteAsync(string username)
         {
             if (string.IsNullOrEmpty(username))
-                throw new ValidationException("Username must not be null or empty.");
+                throw new ArgumentException("Username must not be null or empty.");
             
             await EnsureUserExists(username);
             
@@ -53,8 +59,7 @@ namespace FutterlisteNg.Domain.Service
 
         public async Task UpdateAsync(User toUpdate)
         {
-            await EnsureUserExists(toUpdate.Username);
-
+            (await UpdateValidator.ValidateAsync(toUpdate)).ThrowIfInvalid();
             await _userRepository.UpdateAsync(toUpdate);
         }
 
