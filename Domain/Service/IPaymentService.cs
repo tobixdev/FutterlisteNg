@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FutterlisteNg.Data.Model;
+using FutterlisteNg.Domain.Model;
 
 namespace FutterlisteNg.Domain.Service
 {
@@ -12,5 +13,6 @@ namespace FutterlisteNg.Domain.Service
         Task AddAsync(Payment payment);
         Task DeleteAsync(Guid id);
         Task UpdateAsync(Payment payment);
+        Task<IEnumerable<UserBalanceEntry>> GetUserBalanceList();
     }
 }

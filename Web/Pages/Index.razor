@@ -1,5 +1,46 @@
 ﻿@page "/"
+@using FutterlisteNg.Domain.Model
+@using FutterlisteNg.Domain.Service
+@inject IPaymentService PaymentService
 
-<h1>Hello, world!</h1>
+<h2>Top of ze pops</h2>
 
-Welcome to your new app.
+@if (_balances == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th class="right-align">Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var balance in _balances)
+            {
+                <tr>
+                    <td>@balance.User.Name (@balance.User.Username)</td>
+                    <td class="right-align">@balance.Balance.ToString("n2") €</td>
+                </tr>
+            }
+            @if (_balances.Length == 0)
+            {
+                <p>No users found.</p>
+            }
+        </tbody>
+    </table>
+}
+
+@code
+{
+    private UserBalanceEntry[] _balances;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _balances = (await PaymentService.GetUserBalanceList()).ToArray();
+    }
+
+}

@@ -32,14 +32,14 @@ namespace FutterlisteNg.Setup
             insertedData.InsertedUsers.Kyle = kyle;
             insertedData.InsertedUsers.Token = token;
             
-            var payment1 = new PaymentBuilder().WithPayedBy("Eric")
+            var payment1 = new PaymentBuilder("Eric")
                 .WithDescription("Kentucky Fried Chicken")
                 .WithPaymentLine("Eric", 7.5m)
                 .WithPaymentLine("Stan", 7.5m)
                 .WithPaymentLine("Kenny", 7.5m)
                 .WithPaymentLine("Kyle", 7.5m)
                 .Build();
-            var payment2 = new PaymentBuilder().WithPayedBy("Stan")
+            var payment2 = new PaymentBuilder("Stan")
                 .WithDescription("Comic books")
                 .WithPaymentLine("Stan", 7.5m)
                 .WithPaymentLine("Kyle", 10m)

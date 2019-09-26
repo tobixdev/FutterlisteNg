@@ -5,6 +5,7 @@ using FluentAssertions;
 using FutterlisteNg.Data.Model;
 using FutterlisteNg.Data.Model.Builder;
 using FutterlisteNg.Data.Repository;
+using FutterlisteNg.Tests.Extensions;
 using NUnit.Framework;
 
 namespace FutterlisteNg.Tests.Data
@@ -22,8 +23,7 @@ namespace FutterlisteNg.Tests.Data
         [Test]
         public async Task AddPayment_ShouldAddPayment()
         {
-            var payment = new PaymentBuilder()
-                .WithPayedBy("TestUser")
+            var payment = new PaymentBuilder("TestUser")
                 .WithDescription("TestExpense")
                 .WithPaymentLine("TestUser", 10.5m)
                 .Build();
@@ -37,19 +37,17 @@ namespace FutterlisteNg.Tests.Data
         [Test]
         public async Task FindPaymentsPayedBy_ShouldFilterPaymentsCorrectly()
         {
-            var payment1 = new PaymentBuilder()
-                .WithPayedBy("Kyle")
+            var payment1 = new PaymentBuilder("Kyle")
                 .WithDescription("KFC")
                 .WithPaymentLine("Eric", 10.5m)
                 .WithPaymentLine("Kyle", 9.75m)
                 .Build();
-            var payment2 = new PaymentBuilder()
-                .WithPayedBy("Stan")
+            var payment2 = new PaymentBuilder("Stan")
                 .WithDescription("Video Games")
                 .WithPaymentLine("Eric", 40m)
                 .WithPaymentLine("Stan", 40m)
                 .Build();
-            await AddPayments(payment1, payment2);
+            await _paymentRepository.AddPaymentsAsync(payment1, payment2);
 
             var result = (await _paymentRepository.FindPaymentsPayedBy("Kyle")).ToArray();
             
@@ -60,19 +58,17 @@ namespace FutterlisteNg.Tests.Data
         [Test]
         public async Task FindPaymentsPayedFor_ShouldFilterPaymentsCorrectly()
         {
-            var payment1 = new PaymentBuilder()
-                .WithPayedBy("Eric")
+            var payment1 = new PaymentBuilder("Eric")
                 .WithDescription("KFC")
                 .WithPaymentLine("Eric", 10.5m)
                 .WithPaymentLine("Kyle", 9.75m)
                 .Build();
-            var payment2 = new PaymentBuilder()
-                .WithPayedBy("Stan")
+            var payment2 = new PaymentBuilder("Stan")
                 .WithDescription("Video Games")
                 .WithPaymentLine("Token", 40m)
                 .WithPaymentLine("Stan", 40m)
                 .Build();
-            await AddPayments(payment1, payment2);
+            await _paymentRepository.AddPaymentsAsync(payment1, payment2);
 
             var insertedPayment = (await _paymentRepository.FindPaymentsPayedFor("Token")).ToArray();
             
@@ -126,12 +122,6 @@ namespace FutterlisteNg.Tests.Data
 
             var updatedPayment = await _paymentRepository.GetAsync(payment.Id);
             updatedPayment.Description.Should().Be("NewDesc");
-        }
-
-        private async Task AddPayments(params Payment[] payments)
-        {
-            foreach (var payment in payments)
-                await _paymentRepository.AddPaymentAsync(payment);
         }
     }
 }

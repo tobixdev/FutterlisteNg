@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using FakeItEasy;
 using FluentAssertions;
@@ -21,7 +22,8 @@ namespace FutterlisteNg.Tests.Domain
         public void SetUp()
         {
             _paymentRepository = A.Fake<IPaymentRepository>();
-            _sut = new PaymentService(_paymentRepository);
+            var userRepository = A.Fake<IUserRepository>();
+            _sut = new PaymentService(_paymentRepository, userRepository);
         }
 
         [Test]
@@ -86,6 +88,14 @@ namespace FutterlisteNg.Tests.Domain
             await _sut.UpdateAsync(payment);
 
             A.CallTo(() => _paymentRepository.UpdateAsync(payment)).MustHaveHappened(1, Times.Exactly);
+        }
+
+        [Test]
+        public async Task GetUserBalanceList_WithNoUsers_ShouldReturnEmptyEnumerable()
+        {
+            var result = await _sut.GetUserBalanceList();
+            
+            Assert.That(result, Is.Empty);
         }
     }
 }
