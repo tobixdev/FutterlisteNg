@@ -28,7 +28,7 @@ namespace FutterlisteNg.Data.Model.Builder
 
         public Payment Build()
         {
-            var payment = new Payment(_payedBy, string.Empty);
+            var payment = new Payment(_payedBy, _description);
             payment.PaymentLines.AddRange(_lines);
             return payment;
         }

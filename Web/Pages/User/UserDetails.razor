@@ -7,19 +7,21 @@
 @inject NavigationManager NavigationManager
 
 
-<div class="row">
-    <div class="input-field col s5">
-        <input id="shortName" type="text" class="validate" @bind="@User.Username" disabled="@UsernameReadOnly" />
-        <label class="active" for="shortName">Username</label>
+<EditContext>
+    <div class="row">
+        <div class="input-field col s5">
+            <InputText id="shortName" type="text" class="validate" @bind-Value="@User.Username" disabled="@UsernameReadOnly" />
+            <label class="active" for="shortName">Username</label>
+        </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="input-field col s5">
-        <input id="name" type="text" class="validate" @bind="@User.Name" />
-        <label class="active" for="name">Name</label>
+    
+    <div class="row">
+        <div class="input-field col s5">
+            <InputText id="name" type="text" class="validate" @bind-Value="@User.Name" />
+            <label class="active" for="name">Name</label>
+        </div>
     </div>
-</div>
+</EditContext>
 
 
 @code {
