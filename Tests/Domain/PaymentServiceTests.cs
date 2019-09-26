@@ -64,5 +64,28 @@ namespace FutterlisteNg.Tests.Domain
 
             A.CallTo(() => _paymentRepository.DeleteAsync(id)).MustHaveHappened(1, Times.Exactly);
         }
+
+        [Test]
+        public async Task Update_WithNonExistentPayment_ShouldThrowNotFoundException()
+        {
+            var payment = new Payment();
+            
+            Func<Task> act = async () => await _sut.UpdateAsync(payment);
+
+            await act.Should().ThrowAsync<NotFoundException>()
+                .WithMessage("Payment with Id '00000000-0000-0000-0000-000000000000' not found");
+        }
+
+        [Test]
+        public async Task Update_WithExistentPayment_ShouldDelegateCallToRepository()
+        {
+            var id = new Guid("497AABB3-8F7C-4173-964F-564DB53B0732");
+            var payment = new Payment {Id = id};
+            A.CallTo(() => _paymentRepository.ExistsAsync(id)).Returns(true);
+            
+            await _sut.UpdateAsync(payment);
+
+            A.CallTo(() => _paymentRepository.UpdateAsync(payment)).MustHaveHappened(1, Times.Exactly);
+        }
     }
 }

@@ -116,6 +116,18 @@ namespace FutterlisteNg.Tests.Data
             result.Should().BeFalse();
         }
 
+        [Test]
+        public async Task Update_WithExistentPayment_ShouldUpdatePayment()
+        {
+            var payment = TestData.InsertedPayments.KFC;
+            payment.Description = "NewDesc";
+            
+            await _paymentRepository.UpdateAsync(payment);
+
+            var updatedPayment = await _paymentRepository.GetAsync(payment.Id);
+            updatedPayment.Description.Should().Be("NewDesc");
+        }
+
         private async Task AddPayments(params Payment[] payments)
         {
             foreach (var payment in payments)

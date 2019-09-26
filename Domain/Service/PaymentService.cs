@@ -22,6 +22,11 @@ namespace FutterlisteNg.Domain.Service
             return await _paymentRepository.FindAllAsync();
         }
 
+        public async Task<Payment> GetAsync(Guid id)
+        {
+            return await _paymentRepository.GetAsync(id);
+        }
+
         public async Task AddAsync(Payment payment)
         {
             await _paymentRepository.AddPaymentAsync(payment);
@@ -33,6 +38,14 @@ namespace FutterlisteNg.Domain.Service
                 throw new NotFoundException($"Payment with Id '{id}' not found");
             
             await _paymentRepository.DeleteAsync(id);
+        }
+
+        public async Task UpdateAsync(Payment payment)
+        {
+            if(!await _paymentRepository.ExistsAsync(payment.Id))
+                throw new NotFoundException($"Payment with Id '{payment.Id}' not found");
+
+            await _paymentRepository.UpdateAsync(payment);
         }
     }
 }

@@ -1,0 +1,35 @@
+@page "/payments/edit/{id:guid}"
+@using FutterlisteNg.Data.Model
+@using FutterlisteNg.Domain.Service
+@using FutterlisteNg.Web.Components
+@using FutterlisteNg.Web.Service
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager NavigationManager
+@inject IUserService UserService
+@inject IPaymentService PaymentService
+@inject IToastService ToastService
+
+
+<h2>Edit Payment</h2>
+
+<PaymentDetails Payment="@_payment" SubmitButtonText="Update" OnSubmit="UpdatePayment" />
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+    
+    private Payment _payment = new Payment();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _payment = await PaymentService.GetAsync(Id);
+    }
+    
+    private async Task UpdatePayment()
+    {
+        await PaymentService.UpdateAsync(_payment);
+        NavigationManager.NavigateTo("/payments");
+        await ToastService.Success("Payment updated");
+    }
+
+}

@@ -10,9 +10,11 @@ namespace FutterlisteNg.Data.Repository
     {
         Task AddPaymentAsync(Payment payment);
         Task<IEnumerable<Payment>> FindAllAsync();
+        Task<Payment> GetAsync(Guid id);
         Task<IEnumerable<Payment>> FindPaymentsPayedBy(string shortName);
         Task<IEnumerable<Payment>> FindPaymentsPayedFor(string shortName);
         Task DeleteAsync(Guid id);
         Task<bool> ExistsAsync(Guid id);
+        Task UpdateAsync(Payment payment);
     }
 }

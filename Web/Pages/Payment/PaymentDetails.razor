@@ -1,0 +1,92 @@
+@using FutterlisteNg.Data.Model
+@using FutterlisteNg.Domain.Service
+@using FutterlisteNg.Web.Components
+@using FutterlisteNg.Web.Service
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager NavigationManager
+@inject IUserService UserService
+@inject IPaymentService PaymentService
+@inject IToastService ToastService
+
+<form>
+    <div class="row">
+    <div class="col s6 payment-container">
+        <div class="input-field">
+            <input id="payed-by" type="text" class="validate autocomplete" @bind="@Payment.PayedBy" />
+            <label class="active" for="payed-by">Payed by</label>
+        </div>
+        <div class="input-field">
+            <input id="description" type="text" class="validate" @bind="@Payment.Description" />
+            <label class="active" for="description">Spent on</label>
+        </div>
+
+        <p><b>Total:</b> @Payment.TotalAmount</p>
+
+        <button class="btn waves-effect waves-light" type="button" name="action" @onclick="OnSubmit">
+            @SubmitButtonText
+        </button>
+    </div>
+    <div class="col s6">
+        <table>
+        <thead>
+            <tr>
+                <th>Payed For</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var paymentLine in Payment.PaymentLines)
+            {
+            <tr>
+                <td>
+                    <input id="payed-for" type="text" @bind="@paymentLine.PaidFor" />
+                </td>
+                <td>
+                    <input id="amount" type="text" @bind="@paymentLine.Amount"/>
+                </td>
+                <td>
+                    <DeleteButton OnClick="(() => RemovePaymentLine(paymentLine))"/>
+                </td>
+            </tr>
+            }
+        </tbody>
+        </table>
+        <div class="row">
+            <div class="col s2"></div>
+            <div class="col s8">
+                <button class="btn btn-add-row" type="button" name="action" @onclick="InsertNewPaymentLine">
+                    <span>Add New Row</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+
+@code {
+    [Parameter]
+    public Payment Payment { get; set; } = new Payment();
+
+    [Parameter] 
+    public string SubmitButtonText { get; set; }
+    
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        Payment.PaymentLines.Add(new PaymentLine(null, 0));
+        return base.OnInitializedAsync();
+    }
+
+    private void InsertNewPaymentLine()
+    {
+        Payment.PaymentLines.Add(new PaymentLine(null, 0));
+    }
+
+    private void RemovePaymentLine(PaymentLine paymentLine)
+    {
+        Payment.PaymentLines.Remove(paymentLine);
+    }
+}

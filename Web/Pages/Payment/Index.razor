@@ -3,8 +3,10 @@
 @using FutterlisteNg.Domain.Service
 @using FutterlisteNg.Web.Service
 @using FutterlisteNg.Web.Components
+@using Microsoft.AspNetCore.Components
 @inject IToastService ToastService
 @inject IPaymentService PaymentService
+@inject NavigationManager NavigationManager
 
 <h2>Payments</h2>
 
@@ -38,7 +40,10 @@ else
                     <td>@payment.PayedBy</td>
                     <td>@payment.Description</td>
                     <td>@payment.TotalAmount</td>
-                    <td><DeleteButton OnClick="(() => DeletePayment(payment))"/></td>
+                    <td>
+                        <EditButton OnClick="(() => OpenPayment(payment))"/>
+                        <DeleteButton OnClick="(() => DeletePayment(payment))"/>
+                    </td>
                 </tr>
             }
         }
@@ -60,6 +65,11 @@ else
         await LoadPayments();
     }
 
+    private async Task LoadPayments()
+    {
+        _payments = (await PaymentService.FindAllAsync()).ToArray();
+    }
+
     private async Task DeletePayment(Payment payment)
     {
         await PaymentService.DeleteAsync(payment.Id);
@@ -67,9 +77,9 @@ else
         await ToastService.Success("Payment deleted");
     }
 
-    private async Task LoadPayments()
+    private void OpenPayment(Payment payment)
     {
-        _payments = (await PaymentService.FindAllAsync()).ToArray();
+        NavigationManager.NavigateTo("/payments/edit/" + payment.Id);
     }
 
 }
