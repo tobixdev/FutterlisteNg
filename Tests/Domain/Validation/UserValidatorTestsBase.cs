@@ -20,15 +20,21 @@ namespace FutterlisteNg.Tests.Domain.Validation
         public void SetUpBase()
         {
             UserRepository = A.Fake<IUserRepository>();
+            // TODO better solution needed
+            A.CallTo(() => UserRepository.Exists("Existing")).Returns(true);
+            A.CallTo(() => UserRepository.Exists("Eric")).Returns(true);
+            A.CallTo(() => UserRepository.Exists("Stan")).Returns(true);
+            A.CallTo(() => UserRepository.Exists("Token")).Returns(true);
             Sut = CreateValidator();
         }
         
         protected abstract IValidator<User> CreateValidator();
+        protected abstract User CreateValidUser();
         
         [Test]
         public void Validate_WithValidUser_ShouldReturnValidResult()
         {
-            var user = new User("Username", "real name");
+            var user = CreateValidUser();
 
             var validationResult = Sut.Validate(user);
 
@@ -58,7 +64,8 @@ namespace FutterlisteNg.Tests.Domain.Validation
         [Test]
         public void Validate_WithNoName_ShouldReturnInvalidResult()
         {
-            var user = new User("Username", null);
+            var user = CreateValidUser();
+            user.Name = null;
 
             var validationResult = Sut.Validate(user);
 
@@ -68,7 +75,8 @@ namespace FutterlisteNg.Tests.Domain.Validation
         [Test]
         public void Validate_WithTooShortName_ShouldReturnInvalidResult()
         {
-            var user = new User("Username", "a");
+            var user = CreateValidUser();
+            user.Name = "a";
 
             var validationResult = Sut.Validate(user);
 

@@ -20,7 +20,11 @@ namespace FutterlisteNg.Tests.Domain.Validation
         public void SetUpBase()
         {
             UserRepository = A.Fake<IUserRepository>();
+            // TODO better solution needed
             A.CallTo(() => UserRepository.Exists("Existing")).Returns(true);
+            A.CallTo(() => UserRepository.Exists("Eric")).Returns(true);
+            A.CallTo(() => UserRepository.Exists("Stan")).Returns(true);
+            A.CallTo(() => UserRepository.Exists("Token")).Returns(true);
             Sut = CreateValidator();
         }
 

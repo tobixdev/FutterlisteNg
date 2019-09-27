@@ -15,6 +15,11 @@ namespace FutterlisteNg.Tests.Domain.Validation
             return new UserCreateValidator(UserRepository);
         }
 
+        protected override User CreateValidUser()
+        {
+            return new User("NonExisting", "real name");
+        }
+
         [Test]
         public void Validate_WithExistingUsername_ShouldReturnInvalidResult()
         {

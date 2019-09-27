@@ -37,7 +37,7 @@ namespace FutterlisteNg.Tests.Domain.Validation
 
             var result = Sut.Validate(payment);
             
-            AssertSingleError(result, "Id", "");
+            AssertSingleError(result, "Id", "Payment with id '7960d2f3-3a6f-4792-a35b-535ec4971034' does not exist.");
         }
     }
 }

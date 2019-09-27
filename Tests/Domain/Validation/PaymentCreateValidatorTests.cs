@@ -31,7 +31,7 @@ namespace FutterlisteNg.Tests.Domain.Validation
 
             var result = Sut.Validate(payment);
             
-            AssertSingleError(result, "Id", "");
+            AssertSingleError(result, "Id", "'Id' must be equal to '00000000-0000-0000-0000-000000000000'.");
         }
     }
 }

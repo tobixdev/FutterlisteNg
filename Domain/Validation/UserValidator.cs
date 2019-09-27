@@ -16,27 +16,32 @@ namespace FutterlisteNg.Domain.Validation
                 .NotEmpty()
                 .MinimumLength(2);
         }
+
+        protected bool ValidUserName(User user)
+        {
+            return !string.IsNullOrEmpty(user.Username) && user.Username.Length >= 2;
+        }
     }
 
     public class UserCreateValidator : UserValidatorBase
     {
-        public UserCreateValidator(IUserRepository userRepository) : base()
+        public UserCreateValidator(IUserRepository userRepository)
         {
             RuleFor(u => u.Username)
                 .MustAsync(async (username, _) => !await userRepository.Exists(username))
                 .WithMessage(p => $"User with username '{p.Username}' already exists.")
-                .When(u => !string.IsNullOrEmpty(u.Username));
+                .When(ValidUserName);
         }
     }
 
     public class UserUpdateValidator : UserValidatorBase
     {
-        public UserUpdateValidator(IUserRepository userRepository) : base()
+        public UserUpdateValidator(IUserRepository userRepository)
         {
             RuleFor(u => u.Username)
                 .MustAsync(async (username, _) => await userRepository.Exists(username))
                 .WithMessage(p => $"User with username '{p.Username}' does not exist.")
-                .When(u => !string.IsNullOrEmpty(u.Username));
+                .When(ValidUserName);
         }
     }
 }

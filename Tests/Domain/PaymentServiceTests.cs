@@ -25,13 +25,17 @@ namespace FutterlisteNg.Tests.Domain
         {
             _paymentRepository = A.Fake<IPaymentRepository>();
             var userRepository = A.Fake<IUserRepository>();
+            // TODO better solution needed
+            A.CallTo(() => userRepository.Exists("Existing")).Returns(true);
+            A.CallTo(() => userRepository.Exists("Eric")).Returns(true);
+            A.CallTo(() => userRepository.Exists("Stan")).Returns(true);
             _sut = new PaymentService(_paymentRepository, userRepository);
         }
 
         [Test]
         public async Task Add_ShouldDelegateCallToRepository()
         {
-            var payment = PaymentBuilder.Valid.WithId(new Guid("14ACFA68-E5B9-4A6F-8269-163D56CE3F22")).Build();
+            var payment = PaymentBuilder.Valid.Build();
 
             await _sut.AddAsync(payment);
 

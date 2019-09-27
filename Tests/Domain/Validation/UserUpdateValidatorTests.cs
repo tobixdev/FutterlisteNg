@@ -13,5 +13,10 @@ namespace FutterlisteNg.Tests.Domain.Validation
         {
             return new UserUpdateValidator(UserRepository);
         }
+
+        protected override User CreateValidUser()
+        {
+            return new User("Existing", "real name");
+        }
     }
 }
