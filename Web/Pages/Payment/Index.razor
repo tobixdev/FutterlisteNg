@@ -68,6 +68,7 @@ else
     private async Task LoadPayments()
     {
         _payments = (await PaymentService.FindAllAsync()).ToArray();
+        StateHasChanged();
     }
 
     private async Task DeletePayment(Payment payment)

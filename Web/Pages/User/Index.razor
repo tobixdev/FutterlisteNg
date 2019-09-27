@@ -56,7 +56,6 @@ else
     private async Task DeleteUser(User user)
     {
         await UserService.DeleteAsync(user.Username);
-        // TODO Why does this not work?
         await LoadUsers();
         await ToastService.Success("User deleted");
     }
@@ -69,6 +68,7 @@ else
     private async Task LoadUsers()
     {
         _users = (await UserService.FindAllAsync()).ToArray();
+        StateHasChanged();
     }
 
 }
