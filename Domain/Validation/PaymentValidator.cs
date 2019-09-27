@@ -12,7 +12,7 @@ namespace FutterlisteNg.Domain.Validation
         protected PaymentValidatorBase(IUserRepository userRepository)
         {
             RuleFor(p => p.PayedBy)
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(p => p.PayedBy)
                 .MustAsync(async (username, _) => await userRepository.Exists(username))
@@ -38,7 +38,7 @@ namespace FutterlisteNg.Domain.Validation
                     .GreaterThan(0);
 
                 RuleFor(pl => pl.PaidFor)
-                    .NotNull();
+                    .NotEmpty();
 
                 RuleFor(pl => pl.PaidFor)
                     .MustAsync(async (username, _) => await userRepository.Exists(username))

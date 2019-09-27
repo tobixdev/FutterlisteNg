@@ -1,6 +1,7 @@
 @page "/payments/edit/{id:guid}"
 @using FutterlisteNg.Data.Model
 @using FutterlisteNg.Domain.Service
+@using FutterlisteNg.Domain.Validation
 @using FutterlisteNg.Web.Components
 @using FutterlisteNg.Web.Service
 @using Microsoft.AspNetCore.Components
@@ -12,7 +13,7 @@
 
 <h2>Edit Payment</h2>
 
-<PaymentDetails Payment="@_payment" SubmitButtonText="Update" OnSubmit="UpdatePayment" />
+<PaymentDetails Payment="@_payment" SubmitButtonText="Update" OnSubmit="@UpdatePayment" ValidatorType="@typeof(PaymentUpdateValidator)"/>
 
 @code {
     [Parameter]

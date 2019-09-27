@@ -1,5 +1,6 @@
 using FutterlisteNg.Data.Repository;
 using FutterlisteNg.Domain.Service;
+using FutterlisteNg.Domain.Validation;
 using FutterlisteNg.Web.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +31,10 @@ namespace FutterlisteNg.Web
             services.AddScoped(typeof(IToastService), typeof(ToastService));
             services.AddSingleton(typeof(IPaymentService), typeof(PaymentService));
             services.AddSingleton(typeof(IPaymentRepository), typeof(PaymentRepository));
+            services.AddSingleton(typeof(UserCreateValidator));
+            services.AddSingleton(typeof(UserUpdateValidator));
+            services.AddSingleton(typeof(PaymentCreateValidator));
+            services.AddSingleton(typeof(PaymentUpdateValidator));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

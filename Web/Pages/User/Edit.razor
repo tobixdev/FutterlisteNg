@@ -1,6 +1,7 @@
 @page "/users/edit/{username}"
 @using FutterlisteNg.Data.Model
 @using FutterlisteNg.Domain.Service
+@using FutterlisteNg.Domain.Validation
 @using FutterlisteNg.Web.Service
 @using Microsoft.AspNetCore.Components
 @inject IUserService UserService
@@ -10,14 +11,8 @@
 
 <h2>Edit User</h2>
 
-<form>
-    <UserDetails User="@_user" UsernameReadOnly="true"/>
-
-    <button class="btn waves-effect waves-light" type="button" name="action" @onclick="UpdateUser">
-        Edit User
-    </button>
-</form>
-
+<UserDetails User="@_user" UsernameReadOnly="true" SubmitButtonText="Update" OnSubmit="UpdateUser" 
+             ValidatorType="@typeof(UserUpdateValidator)"/>
 
 @code {
     [Parameter]

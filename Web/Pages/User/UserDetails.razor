@@ -1,27 +1,36 @@
 @using FutterlisteNg.Data.Model
 @using FutterlisteNg.Domain.Service
 @using FutterlisteNg.Web.Service
+@using FutterlisteNg.Web.Components
 @using Microsoft.AspNetCore.Components
 @inject IUserService UserService
 @inject IToastService ToastService
 @inject NavigationManager NavigationManager
 
 
-<EditContext>
+<EditForm Model="@User" OnValidSubmit="@OnSubmit">
+    <FluentValidationValidator ValidatorType="@ValidatorType" />
+
     <div class="row">
         <div class="input-field col s5">
-            <InputText id="shortName" type="text" class="validate" @bind-Value="@User.Username" disabled="@UsernameReadOnly" />
-            <label class="active" for="shortName">Username</label>
+            <InputText id="username" @bind-Value="@User.Username" disabled="@UsernameReadOnly" />
+            <label class="active" for="username">Username</label>
+            <span class="helper-text"><ValidationMessage For="@(() => User.Username)" /></span>
         </div>
     </div>
     
     <div class="row">
         <div class="input-field col s5">
-            <InputText id="name" type="text" class="validate" @bind-Value="@User.Name" />
+            <InputText id="name" type="text" @bind-Value="@User.Name" />
             <label class="active" for="name">Name</label>
+            <span class="helper-text"><ValidationMessage For="@(() => User.Name)" /></span>
         </div>
     </div>
-</EditContext>
+
+    <button class="btn waves-effect waves-light" type="submit">
+        @SubmitButtonText
+    </button>
+</EditForm>
 
 
 @code {
@@ -30,5 +39,19 @@
 
     [Parameter]
     public bool UsernameReadOnly { get; set; } = false;
+    
+    [Parameter]
+    public string SubmitButtonText { get; set; }
+    
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+    
+    [Parameter]
+    public Type ValidatorType { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        
+    }
 
 }

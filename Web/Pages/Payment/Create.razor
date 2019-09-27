@@ -1,6 +1,7 @@
 @page "/payments/create"
 @using FutterlisteNg.Data.Model
 @using FutterlisteNg.Domain.Service
+@using FutterlisteNg.Domain.Validation
 @using FutterlisteNg.Web.Components
 @using FutterlisteNg.Web.Service
 @using Microsoft.AspNetCore.Components
@@ -12,7 +13,7 @@
 
 <h2>New Payment</h2>
 
-<PaymentDetails SubmitButtonText="Create" OnSubmit="CreatePayment" />
+<PaymentDetails Payment="@_payment" SubmitButtonText="Create" OnSubmit="@CreatePayment" ValidatorType="@typeof(PaymentCreateValidator)"/>
 
 @code {
     private readonly Payment _payment = new Payment();

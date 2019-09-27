@@ -8,21 +8,25 @@
 @inject IPaymentService PaymentService
 @inject IToastService ToastService
 
-<form>
+<EditForm Model="@Payment" OnValidSubmit="@OnSubmit">
+    <FluentValidationValidator ValidatorType="@ValidatorType" />
+
     <div class="row">
     <div class="col s6 payment-container">
         <div class="input-field">
-            <input id="payed-by" type="text" class="validate autocomplete" @bind="@Payment.PayedBy" />
+            <InputText id="payed-by" @bind-Value="@Payment.PayedBy" />
             <label class="active" for="payed-by">Payed by</label>
+            <span class="helper-text"><ValidationMessage For="@(() => Payment.PayedBy)" /></span>
         </div>
         <div class="input-field">
-            <input id="description" type="text" class="validate" @bind="@Payment.Description" />
-            <label class="active" for="description">Spent on</label>
+            <InputText id="description" class="validate" @bind-Value="@Payment.Description" />
+            <label class="active" for="description">Description</label>
+            <span class="helper-text"><ValidationMessage For="@(() => Payment.Description)" /></span>
         </div>
 
         <p><b>Total:</b> @Payment.TotalAmount</p>
 
-        <button class="btn waves-effect waves-light" type="button" name="action" @onclick="OnSubmit">
+        <button class="btn waves-effect waves-light" type="submit">
             @SubmitButtonText
         </button>
     </div>
@@ -40,10 +44,12 @@
             {
             <tr>
                 <td>
-                    <input id="payed-for" type="text" @bind="@paymentLine.PaidFor" />
+                    <InputText id="payed-for" type="text" @bind-Value="@paymentLine.PaidFor" />
+                    <span class="helper-text"><ValidationMessage For="@(() => paymentLine.PaidFor)" /></span>
                 </td>
                 <td>
-                    <input id="amount" type="text" @bind="@paymentLine.Amount"/>
+                    <InputNumber id="amount" type="text" @bind-Value="@paymentLine.Amount"/>
+                    <span class="helper-text"><ValidationMessage For="@(() => paymentLine.Amount)" /></span>
                 </td>
                 <td>
                     <DeleteButton OnClick="(() => RemovePaymentLine(paymentLine))"/>
@@ -62,7 +68,7 @@
         </div>
     </div>
     </div>
-</form>
+</EditForm>
 
 @code {
     [Parameter]
@@ -72,13 +78,10 @@
     public string SubmitButtonText { get; set; }
     
     [Parameter]
+    public Type ValidatorType { get; set; }
+    
+    [Parameter]
     public EventCallback OnSubmit { get; set; }
-
-    protected override Task OnInitializedAsync()
-    {
-        Payment.PaymentLines.Add(new PaymentLine(null, 0));
-        return base.OnInitializedAsync();
-    }
 
     private void InsertNewPaymentLine()
     {
