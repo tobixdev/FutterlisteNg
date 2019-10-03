@@ -25,29 +25,26 @@ namespace FutterlisteNg.Data.Repository
 
         public async Task<IEnumerable<Payment>> FindAllAsync()
         {
-            var cursor = await PaymentCollection.FindAsync(FilterDefinition<Payment>.Empty);
-            return await cursor.ToListAsync();
+            return await PaymentCollection.Find(FilterDefinition<Payment>.Empty).ToListAsync();
         }
 
         public async Task<Payment> GetAsync(Guid id)
         {
             var filter = new FilterDefinitionBuilder<Payment>().Eq(p => p.Id, id);
-            return await (await PaymentCollection.FindAsync(filter)).SingleAsync();
+            return await PaymentCollection.Find(filter).SingleAsync();
         }
 
         public async Task<IEnumerable<Payment>> FindPaymentsPayedBy(string shortName)
         {
             var filter = new FilterDefinitionBuilder<Payment>().Eq(p => p.PayedBy, shortName);
-            var cursor = await PaymentCollection.FindAsync(filter);
-            return await cursor.ToListAsync();
+            return await PaymentCollection.Find(filter).ToListAsync();
         }
 
         public async Task<IEnumerable<Payment>> FindPaymentsPayedFor(string shortName)
         {
             var filter = new FilterDefinitionBuilder<Payment>()
                 .ElemMatch(p => p.PaymentLines, pl => pl.PaidFor == shortName);
-            var cursor = await PaymentCollection.FindAsync(filter);
-            return await cursor.ToListAsync();
+            return await PaymentCollection.Find(filter).ToListAsync();
         }
 
         public async Task DeleteAsync(Guid id)
@@ -59,8 +56,7 @@ namespace FutterlisteNg.Data.Repository
         public async Task<bool> ExistsAsync(Guid id)
         {
             var filter = new FilterDefinitionBuilder<Payment>().Eq(p => p.Id, id);
-            var result = (await PaymentCollection.FindAsync(filter)).ToEnumerable();
-            return result.Any();
+            return await PaymentCollection.Find(filter).AnyAsync();
         }
 
         public async Task UpdateAsync(Payment payment)

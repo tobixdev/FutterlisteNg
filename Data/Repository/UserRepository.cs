@@ -20,7 +20,7 @@ namespace FutterlisteNg.Data.Repository
         public async Task<User> GetAsync(string username)
         {
             var filter = new FilterDefinitionBuilder<User>().Eq(u => u.Username, username);
-            return await (await UserCollection.FindAsync(filter)).SingleAsync();
+            return await UserCollection.Find(filter).SingleAsync();
         }
 
         public async Task AddAsync(User toAdd)
@@ -36,14 +36,14 @@ namespace FutterlisteNg.Data.Repository
         private async Task<List<User>> FindUsersWithUsername(string username)
         {
             var filter = CreateUsernameFilter(username);
-            var cursor = await UserCollection.FindAsync(filter);
-            return await cursor.ToListAsync();
+            return await UserCollection.Find(filter).ToListAsync();
         }
 
         public async Task<IEnumerable<User>> FindAllAsync()
         {
-            var cursor = await UserCollection.FindAsync(FilterDefinition<User>.Empty);
-            return cursor.ToEnumerable();
+            return await UserCollection.Find(FilterDefinition<User>.Empty)
+                .SortByDescending(u => u.Active)
+                .ToListAsync();
         }
 
         public async Task<bool> Exists(string username)

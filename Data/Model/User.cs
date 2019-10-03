@@ -11,11 +11,7 @@ namespace FutterlisteNg.Data.Model
         {
         }
 
-        public User(string username, string name) : this(username, name, true)
-        {
-        }
-
-        public User(string username, string name, bool active)
+        public User(string username, string name, bool active = true)
         {
             Name = name;
             Username = username;

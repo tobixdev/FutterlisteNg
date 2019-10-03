@@ -33,6 +33,19 @@ namespace FutterlisteNg.Tests.Data
         }
 
         [Test]
+        public async Task FindAll_ShouldSortUsersCorrectly()
+        {
+            var result = (await _sut.FindAllAsync()).ToArray();
+
+            result.Should().HaveCount(5);
+            result[0].Username.Should().Be("Eric");
+            result[1].Username.Should().Be("Stan");
+            result[2].Username.Should().Be("Kenny");
+            result[3].Username.Should().Be("Kyle");
+            result[4].Username.Should().Be("Token");
+        }
+
+        [Test]
         public async Task FindAll_AfterAdd_ShouldFindAddedUser()
         {
             var user = new User("TU", "TestUser");
