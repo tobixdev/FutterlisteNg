@@ -10,7 +10,6 @@ namespace FutterlisteNg.Data.Repository
         Task<User> GetAsync(string username);
         Task AddAsync(User toAdd);
         Task<bool> Exists(string username);
-        Task DeleteAsync(string username);
         Task UpdateAsync(User toUpdate);
     }
 }

@@ -9,7 +9,6 @@ namespace FutterlisteNg.Domain.Service
         Task<IEnumerable<User>> FindAllAsync();
         Task<User> GetAsync(string username);
         Task AddAsync(User toAdd);
-        Task DeleteAsync(string username);
         Task UpdateAsync(User toUpdate);
     }
 }

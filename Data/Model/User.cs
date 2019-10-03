@@ -11,10 +11,15 @@ namespace FutterlisteNg.Data.Model
         {
         }
 
-        public User(string username, string name)
+        public User(string username, string name) : this(username, name, true)
+        {
+        }
+
+        public User(string username, string name, bool active)
         {
             Name = name;
             Username = username;
+            Active = active;
             PayedBy = new List<Payment>();
         }
         
@@ -26,6 +31,9 @@ namespace FutterlisteNg.Data.Model
         
         [BsonElement("payed_by")]
         public List<Payment> PayedBy { get; set; }
+        
+        [BsonElement("active")]
+        public bool Active { get; set; }
 
         public override string ToString()
         {

@@ -51,11 +51,6 @@ namespace FutterlisteNg.Data.Repository
             return (await FindUsersWithUsername(username)).Count > 0;
         }
 
-        public async Task DeleteAsync(string username)
-        {
-            await UserCollection.DeleteOneAsync(CreateUsernameFilter(username));
-        }
-
         public async Task UpdateAsync(User toUpdate)
         {
             var filter = CreateUsernameFilter(toUpdate.Username);

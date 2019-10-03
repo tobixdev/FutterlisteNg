@@ -30,7 +30,7 @@ else
                     <td>@user.Name (@user.Username)</td>
                     <td>
                         <EditButton OnClick="(() => EditUser(user))" />
-                        <DeleteButton OnClick="(() => DeleteUser(user))"/>
+                        <ToggleActiveButton IsActive="@user.Active" OnActivate="(() => ActivateUser(user))" OnDeactivate="(() => DeactivateUser(user))"/>
                     </td>
                 </tr>
             }
@@ -53,11 +53,20 @@ else
         await LoadUsers();
     }
 
-    private async Task DeleteUser(User user)
+    private async Task DeactivateUser(User user)
     {
-        await UserService.DeleteAsync(user.Username);
+        user.Active = false;
+        await UserService.UpdateAsync(user);
         await LoadUsers();
-        await ToastService.Success("User deleted");
+        await ToastService.Success("User deactivated");
+    }
+
+    private async Task ActivateUser(User user)
+    {
+        user.Active = true;
+        await UserService.UpdateAsync(user);
+        await LoadUsers();
+        await ToastService.Success("User activated");
     }
 
     private void EditUser(User user)

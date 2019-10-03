@@ -1,0 +1,28 @@
+@namespace FutterlisteNg.Web.Components
+
+@using Microsoft.AspNetCore.Components
+
+@if (IsActive)
+{
+   <a class="btn-small btn-blue" @onclick="OnDeactivate" title="Deactivate">
+       <i class="material-icons">check_box</i>
+   </a>
+}
+else
+{
+   <a class="btn-small btn-blue" @onclick="OnActivate" title="Activate">
+       <i class="material-icons">check_box_outline_blank</i>
+   </a>
+}
+
+@code
+{
+       [Parameter]
+       public EventCallback OnActivate { get; set; }
+       
+       [Parameter]
+       public EventCallback OnDeactivate { get; set; }
+       
+       [Parameter]
+       public bool IsActive { get; set; }
+}

@@ -61,14 +61,6 @@ namespace FutterlisteNg.Tests.Data
         }
 
         [Test]
-        public async Task Delete_WithExistentUser_ShouldDeleteUser()
-        {
-            await _sut.DeleteAsync("Eric");
-
-            (await _sut.Exists("Eric")).Should().Be(false);
-        }
-
-        [Test]
         public async Task Get_WithExistingUser_ShouldReturnUser()
         {
             var result = await _sut.GetAsync("Eric");

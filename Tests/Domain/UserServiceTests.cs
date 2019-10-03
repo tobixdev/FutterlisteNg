@@ -70,26 +70,6 @@ namespace FutterlisteNg.Tests.Domain
         }
 
         [Test]
-        public async Task Delete_WithNotExistentUser_ShouldThrowNotFoundException()
-        {
-            Func<Task> act = async () => await _sut.DeleteAsync("Not Exsitent");
-
-            await act.Should().ThrowAsync<NotFoundException>()
-                .WithMessage("User with username 'Not Exsitent' does not exist.");
-        }
-
-        [Test]
-        public async Task Delete_WithExistentUser_ShouldDelegateToRepository()
-        {
-            A.CallTo(() => _userRepository.Exists("Username")).Returns(true);
-                
-            await _sut.DeleteAsync("Username");
-
-            A.CallTo(() => _userRepository.DeleteAsync("Username"))
-                .MustHaveHappened(1, Times.Exactly);
-        }
-
-        [Test]
         public async Task Get_WithExistingUser_ShouldReturnUser()
         {
             var user = new User();

@@ -10,14 +10,15 @@ namespace FutterlisteNg.Data.Model.Builder
             .WithPaymentLine("Stan", 5)
             .WithPaymentLine("Eric", 5);
 
-        private string _payedBy;
         private Guid _id;
+        private string _payedBy;
         private string _description;
         private List<PaymentLine> _lines;
 
         public PaymentBuilder(string payedBy)
         {
             _payedBy = payedBy;
+            _description = string.Empty;
             _lines = new List<PaymentLine>();
         }
 

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -44,17 +43,6 @@ namespace FutterlisteNg.Domain.Service
             
             s_log.Info("Creating new User: " + toAdd);
             await _userRepository.AddAsync(toAdd);
-        }
-
-        public async Task DeleteAsync(string username)
-        {
-            if (string.IsNullOrEmpty(username))
-                throw new ArgumentException("Username must not be null or empty.");
-            
-            await EnsureUserExists(username);
-            
-            s_log.Info("Deleting user " + username);
-            await _userRepository.DeleteAsync(username);
         }
 
         public async Task UpdateAsync(User toUpdate)

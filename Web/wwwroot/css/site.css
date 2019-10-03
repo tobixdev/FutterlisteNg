@@ -40,6 +40,14 @@ div.col.payment-container {
     background-color: palevioletred;
 }
 
+.btn-blue {
+    background-color: blue;
+}
+
+.btn-blue:hover {
+    background-color: dodgerblue;
+}
+
 .btn-add-row {
     color: black;
     background-color: white;
